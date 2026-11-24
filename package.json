@@ -1,0 +1,17 @@
+{
+  "name": "city-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser-based open-world game engine with an in-engine editor",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
+  }
+}
