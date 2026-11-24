@@ -70,9 +70,7 @@ class World implements EcsWorld {
   query(...types: ComponentType<unknown>[]): EntityQuery {
     const requiredStores: ComponentStore[] = [];
     for (const type of types) {
-      const store = this.stores.get(type);
-      if (store === undefined) return EMPTY_QUERY;
-      requiredStores.push(store);
+      requiredStores.push(this.getOrCreateStore(type));
     }
 
     let baseStore: ComponentStore | undefined;
@@ -134,10 +132,6 @@ class World implements EcsWorld {
   }
 }
 
-const EMPTY_QUERY: EntityQuery = {
-  forEach: (): void => undefined,
-  count: (): number => 0,
-};
 
 /** Create an isolated ECS world with its own entity and component storage. */
 export function createEcsWorld(): EcsWorld {
