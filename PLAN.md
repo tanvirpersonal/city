@@ -36,7 +36,7 @@
 - [x] Project setup: `package.json`, `package-lock.json`, `tsconfig.json` (strict), `vite.config.ts`, `index.html`, `.gitignore` (+ placeholder `src/main.ts`; `npm ci` and `npm run build` verified on a fresh clone)
 - [~] GitHub Pages deploy workflow (`.github/workflows/deploy.yml`) — pushed, valid YAML, same `npm ci` + `npm run build` steps verified locally. Left: owner sets Pages source to GitHub Actions and confirms the first run is green, then mark `[x]`.
 - [x] `src/engine/core/` — engine bootstrap, fixed-timestep game loop, time (`createEngine()`, phase hooks via `engine.on(phase, fn)`, 60 Hz fixed step with spiral cap; `npm run build` passes; loop behavior checked with a throwaway test, real tests come in Phase 11)
-- [~] `src/engine/ecs/` — in progress: defining typed component/entity/query APIs; runtime wiring and build verification remain
+- [~] `src/engine/ecs/` — in progress: `types.ts` defines typed entities, components, queries and systems; world implementation and runtime wiring remain
 - [ ] `src/engine/events/` — typed event bus
 - [ ] `src/engine/services/` — service registry
 - [ ] `src/engine/config/` — config loader (JSON data-driven)
