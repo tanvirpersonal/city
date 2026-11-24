@@ -1,5 +1,3 @@
-import type { Engine } from "../core";
-
 /** Debug overlay configuration. */
 export interface DebugOverlayOptions {
   /** Seconds between visible stats refreshes. */
@@ -22,9 +20,3 @@ export interface DebugOverlay {
   dispose(): void;
 }
 
-/** Create an engine-connected diagnostics overlay inside the supplied host element. */
-export function createDebugOverlay(
-  engine: Engine,
-  host: HTMLElement,
-  options?: DebugOverlayOptions,
-): DebugOverlay;
