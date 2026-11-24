@@ -5,7 +5,6 @@ class BrowserInputManager implements InputManager {
   private readonly getGamepads: () => ArrayLike<Gamepad | null>;
   private readonly actionBindings = new Map<string, readonly InputBinding[]>();
   private readonly currentValues = new Map<string, number>();
-  private readonly previousValues = new Map<string, number>();
   private readonly pressedActions = new Set<string>();
   private readonly releasedActions = new Set<string>();
   private readonly keysDown = new Set<string>();
@@ -46,7 +45,6 @@ class BrowserInputManager implements InputManager {
     this.frameMouseX = 0;
     this.frameMouseY = 0;
     this.currentValues.clear();
-    this.previousValues.clear();
     this.pressedActions.clear();
     this.releasedActions.clear();
   };
@@ -83,14 +81,12 @@ class BrowserInputManager implements InputManager {
     for (const binding of bindings) this.validateBinding(binding);
     this.actionBindings.set(name, bindings.slice());
     this.currentValues.set(name, 0);
-    this.previousValues.set(name, 0);
     this.pressedActions.delete(name);
     this.releasedActions.delete(name);
   }
 
   unbindAction(action: string): boolean {
     this.currentValues.delete(action);
-    this.previousValues.delete(action);
     this.pressedActions.delete(action);
     this.releasedActions.delete(action);
     return this.actionBindings.delete(action);
@@ -135,7 +131,6 @@ class BrowserInputManager implements InputManager {
 
     for (const [action, bindings] of this.actionBindings) {
       const previous = this.currentValues.get(action) ?? 0;
-      this.previousValues.set(action, previous);
       let value = 0;
       for (const binding of bindings) {
         value = Math.max(value, this.readBinding(binding));
@@ -165,7 +160,6 @@ class BrowserInputManager implements InputManager {
     this.target.removeEventListener("blur", this.onBlur);
     this.actionBindings.clear();
     this.currentValues.clear();
-    this.previousValues.clear();
     this.pressedActions.clear();
     this.releasedActions.clear();
     this.keysDown.clear();
