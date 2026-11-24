@@ -22,7 +22,7 @@
 - [x] `docs/STRUCTURE.md` — folder layout and naming
 - [x] `docs/RENDERING.md` — Unreal-type graphics plan
 - [x] `docs/PHYSICS.md` — physics plan
-- [ ] `docs/OPEN_WORLD.md` — streaming, roads, traffic, pedestrians, missions
+- [x] `docs/OPEN_WORLD.md` — streaming, roads, traffic, pedestrians, missions
 - [ ] `docs/EDITOR.md` — in-engine editor plan
 
 ## Phase 1 — Foundation
