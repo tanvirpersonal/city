@@ -6,7 +6,7 @@ export interface RuntimeConfig {
 }
 
 /** Relative to the config loader's configured baseUrl. */
-export const RUNTIME_CONFIG_PATH = "engine/runtime.json";
+export const RUNTIME_CONFIG_PATH = "data/engine/runtime.json";
 
 /** Runtime type guard for the public engine configuration document. */
 export function isRuntimeConfig(value: unknown): value is RuntimeConfig {
