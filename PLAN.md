@@ -15,11 +15,11 @@
 - [x] `CLAUDE.md` — pointer to rules
 - [x] `README.md` — overview and repo map
 - [x] `PLAN.md` — this file
-- [ ] `ASSETS.md` — assets needed, paste paths, status
-- [ ] `docs/DECISIONS.md` — decision log (tech stack choice recorded here)
-- [ ] `docs/TECH_STACK.md` — libraries and reasons
-- [ ] `docs/ARCHITECTURE.md` — layers, ECS, event bus, service registry, game loop
-- [ ] `docs/STRUCTURE.md` — folder layout and naming
+- [x] `ASSETS.md` — assets needed, paste paths, status
+- [x] `docs/DECISIONS.md` — decision log (tech stack choice recorded here)
+- [x] `docs/TECH_STACK.md` — libraries and reasons
+- [x] `docs/ARCHITECTURE.md` — layers, ECS, event bus, service registry, game loop
+- [x] `docs/STRUCTURE.md` — folder layout and naming
 - [ ] `docs/RENDERING.md` — Unreal-type graphics plan
 - [ ] `docs/PHYSICS.md` — physics plan
 - [ ] `docs/OPEN_WORLD.md` — streaming, roads, traffic, pedestrians, missions
