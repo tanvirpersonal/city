@@ -21,7 +21,7 @@
 - [x] `docs/ARCHITECTURE.md` — layers, ECS, event bus, service registry, game loop
 - [x] `docs/STRUCTURE.md` — folder layout and naming
 - [x] `docs/RENDERING.md` — Unreal-type graphics plan
-- [ ] `docs/PHYSICS.md` — physics plan
+- [x] `docs/PHYSICS.md` — physics plan
 - [ ] `docs/OPEN_WORLD.md` — streaming, roads, traffic, pedestrians, missions
 - [ ] `docs/EDITOR.md` — in-engine editor plan
 
