@@ -6,6 +6,7 @@
 
 **Current phase:** Phase 1 — Foundation (Phase 0 planning is complete)
 **Last updated by:** Claude, 2026-11-25
+**Overall progress:** 13 / 96 items done (~14%) — Phase 0: 13/13 · Phases 1–11: 0/83
 
 ---
 
