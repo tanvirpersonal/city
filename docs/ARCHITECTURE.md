@@ -73,22 +73,23 @@ Every system declares its phase and optional ordering (`runAfter`, `runBefore`).
 Use exactly one of these, in this order of preference:
 
 1. **Components** — write data to a component; the other system reads it next phase.
-2. **Events** — `events.emit("vehicle:crashed", payload)` for one-off notifications. Event names are
-   typed in `src/engine/events/event-map.ts`.
-3. **Services** — `services.get("physics")` for direct API calls to another system. Use sparingly.
+2. **Events** — `events.emit("vehicle:crashed", payload)` for one-off notifications. Each game/runtime defines its own event-map type and supplies it to `createEventBus<EventMap>()`; the reusable typed contract is in `src/engine/events/`.
+3. **Services** — use `services.get("physics")` for optional lookup or `services.require("physics")` for a required dependency. The typed registry in `src/engine/services/` rejects duplicate names and supports explicit unregister/clear.
 
 Never use globals, `window` properties, or reach into another system's internal files.
 
 ## 6. Data-driven design
 
 - Vehicle handling, weapons, materials, missions, weather presets live in JSON under `assets/data/`.
-- Systems read config through `config.get("vehicles/sedan")`; no magic numbers in logic.
-- Every JSON file has a schema/type in `types.ts` and is validated on load (clear error on mismatch).
+- Systems load config through `config.load("vehicles/sedan.json", validator)`; the loader deduplicates in-flight requests, caches validated results, and supports explicit cache invalidation.
+- Each JSON consumer supplies a type guard / validator. Invalid JSON or a shape mismatch fails with a path-specific error before data reaches the system.
+- Runtime engine settings are stored under `assets/data/engine/`; Vite publishes the repository `assets/` directory at the static site root.
 
 ## 6b. Placeholders and graceful failure
 
-- `assets.load(path)` never throws for a missing file; it returns the system's placeholder and logs once.
-- In development, errors show in the on-screen overlay; in release they degrade quietly.
+- `assets.load(key, path, loader, placeholder)` caches in-flight and completed loads. If a loader fails, the manager warns once per asset key and invokes the caller-provided placeholder factory.
+- If the placeholder factory itself fails, that error is surfaced to the caller; normal missing assets should degrade gracefully when a valid fallback is supplied.
+- In development, errors show in the on-screen overlay; the Phase 1 debug panel also records global errors, unhandled rejections, and bounded diagnostic logs.
 
 ## 7. Serialization
 
