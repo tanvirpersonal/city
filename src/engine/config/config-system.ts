@@ -7,7 +7,8 @@ class JsonConfigLoader implements ConfigLoader {
 
   constructor(options: ConfigLoaderOptions = {}) {
     this.baseUrl = (options.baseUrl ?? "assets/data").replace(/\/+$/, "");
-    this.fetcher = options.fetcher ?? fetch;
+    // Native browser fetch must be invoked with the global object as its receiver.
+    this.fetcher = (options.fetcher ?? globalThis.fetch).bind(globalThis);
   }
 
   get size(): number {
