@@ -1,0 +1,10 @@
+{
+  "cubeScale": 1.25,
+  "cameraDistance": 4.5,
+  "focalLength": 260,
+  "rotationSpeed": 0.7,
+  "verticalRotationFactor": 0.55,
+  "backgroundColor": "#0b0d10",
+  "edgeColor": "#dce8f5",
+  "accentColor": "#59c5ff"
+}
