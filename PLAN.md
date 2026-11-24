@@ -4,13 +4,14 @@
 > Markers: `[ ]` not started · `[~]` in progress (note what is left) · `[x]` done+pushed+builds · `[!]` blocked
 > If this file and the file system disagree, trust the file system and fix this file.
 
-**Current phase:** Phase 1 — Foundation (1 of 11 items done; next: GitHub Pages deploy workflow)
+**Current phase:** Phase 1 — Foundation (1 of 11 items done, 1 in progress; next: `src/engine/core/` once the deploy workflow is confirmed)
 **Last updated by:** Claude, 2026-11-25
-**Overall progress:** 14 / 96 items done (~15%) — Phase 0: 13/13 · Phase 1: 1/11 · Phases 2–11: 0/72
+**Overall progress:** 14 / 96 items done (~15%), 1 in progress — Phase 0: 13/13 · Phase 1: 1/11 · Phases 2–11: 0/72
 
 **Open notes for the owner / next AI:**
-- `package-lock.json` is committed and verified (`npm ci` + `npm run build` pass on a fresh clone), so the deploy workflow should use `npm ci`.
+- `package-lock.json` is committed and verified (`npm ci` + `npm run build` pass on a fresh clone), so the deploy workflow uses `npm ci`.
 - `src/main.ts` is a minimal placeholder so the build passes; the engine bootstrap replaces it in the `core/` item.
+- **Owner action needed for deploy:** in the GitHub repo go to Settings → Pages → Source and choose **GitHub Actions**. Then check the Actions tab for a green "Deploy to GitHub Pages" run. The AI cannot see Actions runs, so this has not been confirmed.
 
 ---
 
@@ -33,7 +34,7 @@
 ## Phase 1 — Foundation
 
 - [x] Project setup: `package.json`, `package-lock.json`, `tsconfig.json` (strict), `vite.config.ts`, `index.html`, `.gitignore` (+ placeholder `src/main.ts`; `npm ci` and `npm run build` verified on a fresh clone)
-- [ ] GitHub Pages deploy workflow (`.github/workflows/deploy.yml`)
+- [~] GitHub Pages deploy workflow (`.github/workflows/deploy.yml`) — pushed, valid YAML, same `npm ci` + `npm run build` steps verified locally. Left: owner sets Pages source to GitHub Actions and confirms the first run is green, then mark `[x]`.
 - [ ] `src/engine/core/` — engine bootstrap, fixed-timestep game loop, time
 - [ ] `src/engine/ecs/` — entities, components, systems, queries
 - [ ] `src/engine/events/` — typed event bus
