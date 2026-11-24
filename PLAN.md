@@ -37,7 +37,7 @@
 - [~] GitHub Pages deploy workflow (`.github/workflows/deploy.yml`) — pushed, valid YAML, same `npm ci` + `npm run build` steps verified locally. Left: owner sets Pages source to GitHub Actions and confirms the first run is green, then mark `[x]`.
 - [x] `src/engine/core/` — engine bootstrap, fixed-timestep game loop, time (`createEngine()`, phase hooks via `engine.on(phase, fn)`, 60 Hz fixed step with spiral cap; `npm run build` passes; loop behavior checked with a throwaway test, real tests come in Phase 11)
 - [x] `src/engine/ecs/` — `types.ts` and `ecs-system.ts` provide typed component keys, entity/component storage, live smallest-store AND queries (including queries created before components exist), and registration into core engine phases; `index.ts` exposes the public API. Verified by GitHub Actions run #17: `npm ci`, `npm run build`, Pages artifact upload, and deployment all succeeded.
-- [~] `src/engine/events/` — `types.ts` now defines the generic typed event-map, event bus contract, and unsubscribe API; runtime implementation and public exports remain.
+- [~] `src/engine/events/` — `types.ts` defines the typed event-map and bus contract; `event-system.ts` implements subscribe, once, emit, clear, listener counts, and mutation-safe snapshot delivery; public exports and build verification remain.
 - [ ] `src/engine/services/` — service registry
 - [ ] `src/engine/config/` — config loader (JSON data-driven)
 - [ ] `src/engine/assets/` — asset manager with placeholder fallback
