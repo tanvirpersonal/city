@@ -9,6 +9,7 @@
 |---------|---------|-----|
 | `typescript` (strict) | Language | Type safety across many AI sessions |
 | `vite` | Dev server and bundler | Fast, simple static output for GitHub Pages |
+| `@types/node` (dev) | Node type definitions | `vite.config.ts` uses `node:url` to build path aliases; types only, not shipped |
 | `three` | Rendering (WebGPU renderer + WebGL2 fallback) | PBR, scene graph, loaders, huge ecosystem |
 | `@dimforge/rapier3d-compat` | Physics (WASM) | Fast rigid bodies, colliders, character and vehicle controllers |
 
@@ -37,7 +38,7 @@
 - Fallback: current Firefox/Safari (WebGL2).
 - Mobile: Phase 11, touch controls + lower quality preset.
 
-## Build and scripts (will exist after Phase 1 setup)
+## Build and scripts
 
 ```
 npm install        install dependencies
