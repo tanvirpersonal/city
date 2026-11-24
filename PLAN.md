@@ -4,9 +4,13 @@
 > Markers: `[ ]` not started · `[~]` in progress (note what is left) · `[x]` done+pushed+builds · `[!]` blocked
 > If this file and the file system disagree, trust the file system and fix this file.
 
-**Current phase:** Phase 1 — Foundation (Phase 0 planning is complete)
+**Current phase:** Phase 1 — Foundation (1 of 11 items done; next: GitHub Pages deploy workflow)
 **Last updated by:** Claude, 2026-11-25
-**Overall progress:** 13 / 96 items done (~14%) — Phase 0: 13/13 · Phases 1–11: 0/83
+**Overall progress:** 14 / 96 items done (~15%) — Phase 0: 13/13 · Phase 1: 1/11 · Phases 2–11: 0/72
+
+**Open notes for the owner / next AI:**
+- `package-lock.json` is not committed yet (41 KB, too large to push through the API). Run `npm install` locally and commit it, or the deploy workflow must use `npm install` instead of `npm ci`.
+- `src/main.ts` is a minimal placeholder so the build passes; the engine bootstrap replaces it in the `core/` item.
 
 ---
 
@@ -28,7 +32,7 @@
 
 ## Phase 1 — Foundation
 
-- [ ] Project setup: `package.json`, `tsconfig.json` (strict), `vite.config.ts`, `index.html`, `.gitignore`
+- [x] Project setup: `package.json`, `tsconfig.json` (strict), `vite.config.ts`, `index.html`, `.gitignore` (+ placeholder `src/main.ts`; `npm run build` verified on a fresh clone)
 - [ ] GitHub Pages deploy workflow (`.github/workflows/deploy.yml`)
 - [ ] `src/engine/core/` — engine bootstrap, fixed-timestep game loop, time
 - [ ] `src/engine/ecs/` — entities, components, systems, queries
