@@ -39,7 +39,7 @@
 - [x] `src/engine/core/` — engine bootstrap, fixed-timestep game loop, time (`createEngine()`, phase hooks via `engine.on(phase, fn)`, 60 Hz fixed step with spiral cap; `npm run build` passes; loop behavior checked with a throwaway test, real tests come in Phase 11)
 - [x] `src/engine/ecs/` — `types.ts` and `ecs-system.ts` provide typed component keys, entity/component storage, live smallest-store AND queries (including queries created before components exist), and registration into core engine phases; `index.ts` exposes the public API. Verified by GitHub Actions run #17: `npm ci`, `npm run build`, Pages artifact upload, and deployment all succeeded.
 - [x] `src/engine/events/` — typed event-map and bus contract; subscribe, once, emit, clear, listener counts, and mutation-safe snapshot delivery; public API exported from `index.ts`. Verified by successful GitHub Actions run #26 (`npm ci` + `npm run build`).
-- [~] `src/engine/services/` — `types.ts` now defines the typed service-map and registry contract; runtime implementation, public exports, and build verification remain.
+- [~] `src/engine/services/` — `types.ts` defines the typed service-map and registry contract; `service-system.ts` implements duplicate-safe registration, get/require/has/unregister/clear, and identity-safe cleanup handles; `index.ts` exposes the API. Build verification remains.
 - [ ] `src/engine/config/` — config loader (JSON data-driven)
 - [ ] `src/engine/assets/` — asset manager with placeholder fallback
 - [ ] `src/engine/input/` — keyboard, mouse, gamepad, action mapping
