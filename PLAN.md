@@ -14,6 +14,7 @@
 - GitHub Pages deployment is confirmed: workflow run #17 completed successfully, including `npm ci`, `npm run build`, artifact upload, and Pages deploy.
 - The typed Event Bus is verified by workflow run #26: `npm ci` and `npm run build` passed after the complete event system and public API were committed.
 - All remaining Phase 1 systems are integrated into `src/main.ts`; run #88 passed `npm ci` and `npm run build`, including the hello-scene bundle and Vite asset copy.
+- `docs/ARCHITECTURE.md` was updated to match the shipped typed Event Bus, Service Registry, validated Config Loader, Asset Manager fallback contract, and diagnostics overlay.
 
 ---
 
