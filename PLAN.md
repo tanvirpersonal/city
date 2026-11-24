@@ -9,7 +9,7 @@
 **Overall progress:** 14 / 96 items done (~15%) — Phase 0: 13/13 · Phase 1: 1/11 · Phases 2–11: 0/72
 
 **Open notes for the owner / next AI:**
-- `package-lock.json` is not committed yet (41 KB, too large to push through the API). Run `npm install` locally and commit it, or the deploy workflow must use `npm install` instead of `npm ci`.
+- `package-lock.json` is committed and verified (`npm ci` + `npm run build` pass on a fresh clone), so the deploy workflow should use `npm ci`.
 - `src/main.ts` is a minimal placeholder so the build passes; the engine bootstrap replaces it in the `core/` item.
 
 ---
@@ -32,7 +32,7 @@
 
 ## Phase 1 — Foundation
 
-- [x] Project setup: `package.json`, `tsconfig.json` (strict), `vite.config.ts`, `index.html`, `.gitignore` (+ placeholder `src/main.ts`; `npm run build` verified on a fresh clone)
+- [x] Project setup: `package.json`, `package-lock.json`, `tsconfig.json` (strict), `vite.config.ts`, `index.html`, `.gitignore` (+ placeholder `src/main.ts`; `npm ci` and `npm run build` verified on a fresh clone)
 - [ ] GitHub Pages deploy workflow (`.github/workflows/deploy.yml`)
 - [ ] `src/engine/core/` — engine bootstrap, fixed-timestep game loop, time
 - [ ] `src/engine/ecs/` — entities, components, systems, queries
