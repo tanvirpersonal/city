@@ -17,7 +17,7 @@
 | D-009 | 2026-11-25 | Models in **glTF 2.0 (.glb)**, textures as PBR folders (`albedo/normal/roughness/...`). | Standard, supported everywhere, easy for the owner to source. | Active |
 | D-010 | 2026-11-25 | "Unreal-type" means: PBR + dynamic lights + cascaded shadows + HDR + post-processing + good physics. We build our **own implementation** of these techniques; we do not copy proprietary engine code or assets. | Legal safety and an original engine. | Active |
 | D-011 | 2026-11-25 | Fixed physics timestep (60 Hz) with render interpolation. | Stable vehicle physics regardless of frame rate. | Active |
-| D-012 | 2026-11-25 | Work style: one file per commit, push every file, update `PLAN.md` after each. | Owner has a limited usage plan; sessions end abruptly. | Active |
+| D-012 | 2026-11-25 | Work style: one file per commit, push every file, update `PLAN.md` after each. | Owner has a limited usage plan; sessions end abruptly. | Active |\n| D-013 | 2026-11-25 | Vite serves the repository `assets/` directory as its public directory; source paths stay under `assets/`, and deployed URLs resolve from the copied asset root. | Keeps owner-controlled asset paths while allowing static browser fetches on GitHub Pages without a copy plugin or server. | Active |
 
 ## Open questions (resolve by adding a decision above)
 
