@@ -2,7 +2,7 @@ import type { FrameContext, Phase } from "../core";
 
 /** Opaque component key that keeps each component's data type attached to it. */
 export type ComponentType<T> = symbol & {
-  readonly __componentData?: (value: T) => T;
+  readonly __componentData?: T;
 };
 
 /** Numeric entity handle. Entity IDs are never reused during a world's lifetime. */
