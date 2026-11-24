@@ -1,7 +1,12 @@
 import type { ServiceMap, ServiceRegistry, ServiceUnsubscribe } from "./types";
 
+interface ServiceEntry {
+  readonly service: unknown;
+  readonly token: symbol;
+}
+
 class Registry<Services extends ServiceMap> implements ServiceRegistry<Services> {
-  private readonly services = new Map<string, unknown>();
+  private readonly services = new Map<string, ServiceEntry>();
 
   get size(): number {
     return this.services.size;
@@ -11,18 +16,19 @@ class Registry<Services extends ServiceMap> implements ServiceRegistry<Services>
     if (name.trim().length === 0) throw new Error("services: service name cannot be empty");
     if (this.services.has(name)) throw new Error(`services: "${name}" is already registered`);
 
-    this.services.set(name, service);
+    const token = Symbol(name);
+    this.services.set(name, { service, token });
     let active = true;
     return (): void => {
       if (!active) return;
       active = false;
       // Do not remove a newer registration if this handle is called late.
-      if (this.services.get(name) === service) this.services.delete(name);
+      if (this.services.get(name)?.token === token) this.services.delete(name);
     };
   }
 
   get<K extends keyof Services & string>(name: K): Services[K] | undefined {
-    return this.services.get(name) as Services[K] | undefined;
+    return this.services.get(name)?.service as Services[K] | undefined;
   }
 
   require<K extends keyof Services & string>(name: K): Services[K] {
