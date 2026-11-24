@@ -71,6 +71,8 @@ async function bootstrap(root: HTMLElement): Promise<void> {
   const debug = createDebugOverlay(engine, root);
   const disposeScene = createHelloEngineScene(engine, canvas, input, sceneConfig);
   const removeInputPhase = engine.on("input", () => input.poll());
+  // Registered after the demo scene so transient input survives every render consumer.
+  const clearInputFrame = engine.on("render", () => input.endFrame());
   events.on("engine:error", ({ error }) => debug.reportError(error));
 
   services.register("engine", engine);
@@ -93,6 +95,7 @@ async function bootstrap(root: HTMLElement): Promise<void> {
   window.addEventListener("pagehide", () => {
     disposeScene();
     removeInputPhase();
+    clearInputFrame();
     input.dispose();
     debug.dispose();
     ecs.dispose();
