@@ -43,7 +43,7 @@
 - [~] `src/engine/config/` — `types.ts` defines a typed JSON validator, loader options, cache, and invalidation contract; `config-system.ts` implements safe relative-path validation, in-flight deduplication, JSON parsing, validation, retry after failed requests, and cache invalidation. `engine-config.ts` adds a runtime config type guard and stable data path. `assets/data/engine/runtime.json` provides the default 60 Hz loop settings. `index.ts` exposes the loader and runtime schema. Engine startup integration and build verification remain.
 - [~] `src/engine/assets/` — `types.ts` defines generic loaders, placeholder factories, warning hooks, caching, and invalidation; `asset-system.ts` implements safe paths, deduplicated loads, per-key one-time warnings, placeholder fallback, and cache invalidation. `index.ts` now exposes the public API. Build verification and a bootstrap integration remain.
 - [~] `src/engine/input/` — `types.ts` defines keyboard, mouse, gamepad bindings, action maps, and input snapshot APIs; `input-system.ts` handles keyboard/mouse events, gamepad polling, analog axis thresholds, action transitions, and disposal; `index.ts` exports the API. Engine-phase wiring and build verification remain.
-- [ ] `src/engine/debug/` — stats overlay, error overlay, console
+- [~] `src/engine/debug/` — `types.ts` defines debug overlay, stats, error reporting, and log APIs; DOM panel, engine phase hook, public exports, and build verification remain.
 - [ ] Hello-engine demo scene: spinning cube, FPS counter
 
 ## Phase 2 — Rendering (Unreal-type look)
