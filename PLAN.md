@@ -4,14 +4,14 @@
 > Markers: `[ ]` not started · `[~]` in progress (note what is left) · `[x]` done+pushed+builds · `[!]` blocked
 > If this file and the file system disagree, trust the file system and fix this file.
 
-**Current phase:** Phase 1 — Foundation (2 of 11 items done, 1 in progress; next: `src/engine/ecs/`)
+**Current phase:** Phase 1 — Foundation (3 of 11 items done, 1 in progress; next: `src/engine/events/`)
 **Last updated by:** Claude, 2026-11-25
-**Overall progress:** 15 / 96 items done (~16%), 1 in progress — Phase 0: 13/13 · Phase 1: 2/11 · Phases 2–11: 0/72
+**Overall progress:** 16 / 96 items done (~17%), 1 in progress — Phase 0: 13/13 · Phase 1: 3/11 · Phases 2–11: 0/72
 
 **Open notes for the owner / next AI:**
 - `package-lock.json` is committed and verified (`npm ci` + `npm run build` pass on a fresh clone), so the deploy workflow uses `npm ci`.
 - `src/main.ts` now creates and starts the core engine (no visuals yet); the hello-engine demo item replaces its body later.
-- **Owner action needed for deploy:** in the GitHub repo go to Settings → Pages → Source and choose **GitHub Actions**. Then check the Actions tab for a green "Deploy to GitHub Pages" run. The AI cannot see Actions runs, so this has not been confirmed.
+- GitHub Pages deployment is confirmed: workflow run #17 completed successfully, including `npm ci`, `npm run build`, artifact upload, and Pages deploy.
 
 ---
 
@@ -36,8 +36,8 @@
 - [x] Project setup: `package.json`, `package-lock.json`, `tsconfig.json` (strict), `vite.config.ts`, `index.html`, `.gitignore` (+ placeholder `src/main.ts`; `npm ci` and `npm run build` verified on a fresh clone)
 - [~] GitHub Pages deploy workflow (`.github/workflows/deploy.yml`) — pushed, valid YAML, same `npm ci` + `npm run build` steps verified locally. Left: owner sets Pages source to GitHub Actions and confirms the first run is green, then mark `[x]`.
 - [x] `src/engine/core/` — engine bootstrap, fixed-timestep game loop, time (`createEngine()`, phase hooks via `engine.on(phase, fn)`, 60 Hz fixed step with spiral cap; `npm run build` passes; loop behavior checked with a throwaway test, real tests come in Phase 11)
-- [~] `src/engine/ecs/` — in progress: `types.ts` and `ecs-system.ts` now provide typed component keys, entity/component storage, smallest-store AND queries (including queries created before components exist), and core-phase system registration; `index.ts` exposes the ECS API; TypeScript build verification remains unavailable in this session, so the item stays in progress
-- [ ] `src/engine/events/` — typed event bus
+- [x] `src/engine/ecs/` — `types.ts` and `ecs-system.ts` provide typed component keys, entity/component storage, live smallest-store AND queries (including queries created before components exist), and registration into core engine phases; `index.ts` exposes the public API. Verified by GitHub Actions run #17: `npm ci`, `npm run build`, Pages artifact upload, and deployment all succeeded.
+- [~] `src/engine/events/` — next: implement a typed event bus with typed event-map definitions, subscribe/unsubscribe, emit, and safe listener iteration.
 - [ ] `src/engine/services/` — service registry
 - [ ] `src/engine/config/` — config loader (JSON data-driven)
 - [ ] `src/engine/assets/` — asset manager with placeholder fallback
