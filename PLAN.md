@@ -4,15 +4,16 @@
 > Markers: `[ ]` not started · `[~]` in progress (note what is left) · `[x]` done+pushed+builds · `[!]` blocked
 > If this file and the file system disagree, trust the file system and fix this file.
 
-**Current phase:** Phase 1 — Foundation (5 of 11 items verified; 6 implementations integrated and awaiting current CI verification)
+**Current phase:** Phase 1 — Foundation complete (11/11 items verified); next: Phase 2 — Rendering
 **Last updated by:** Claude, 2026-11-25
-**Overall progress:** 18 / 96 items verified (~19%), 6 in progress — Phase 0: 13/13 · Phase 1: 5/11 verified · Phases 2–11: 0/72
+**Overall progress:** 24 / 96 items verified (25%), none in progress — Phase 0: 13/13 · Phase 1: 11/11 · Phases 2–11: 0/72
 
 **Open notes for the owner / next AI:**
 - `package-lock.json` is committed and verified (`npm ci` + `npm run build` pass on a fresh clone), so the deploy workflow uses `npm ci`.
 - Vite copies the repository `assets/` directory to the deployed site root (`publicDir: "assets"`); runtime fetch paths are relative to that copied root, while owners continue placing source files under `assets/`.
 - GitHub Pages deployment is confirmed: workflow run #17 completed successfully, including `npm ci`, `npm run build`, artifact upload, and Pages deploy.
 - The typed Event Bus is verified by workflow run #26: `npm ci` and `npm run build` passed after the complete event system and public API were committed.
+- All remaining Phase 1 systems are integrated into `src/main.ts`; run #88 passed `npm ci` and `npm run build`, including the hello-scene bundle and Vite asset copy.
 
 ---
 
@@ -39,12 +40,12 @@
 - [x] `src/engine/core/` — engine bootstrap, fixed-timestep game loop, time (`createEngine()`, phase hooks via `engine.on(phase, fn)`, 60 Hz fixed step with spiral cap; `npm run build` passes; loop behavior checked with a throwaway test, real tests come in Phase 11)
 - [x] `src/engine/ecs/` — `types.ts` and `ecs-system.ts` provide typed component keys, entity/component storage, live smallest-store AND queries (including queries created before components exist), and registration into core engine phases; `index.ts` exposes the public API. Verified by GitHub Actions run #17: `npm ci`, `npm run build`, Pages artifact upload, and deployment all succeeded.
 - [x] `src/engine/events/` — typed event-map and bus contract; subscribe, once, emit, clear, listener counts, and mutation-safe snapshot delivery; public API exported from `index.ts`. Verified by successful GitHub Actions run #26 (`npm ci` + `npm run build`).
-- [~] `src/engine/services/` — typed service-map and registry; duplicate-safe registration, get/require/has/unregister/clear, and identity-safe cleanup handles; public API exported and registered in `src/main.ts`. Awaiting current build verification.
-- [~] `src/engine/config/` — validated JSON loader with safe relative paths, in-flight deduplication, retry after failures, and cache invalidation; runtime schema and `assets/data/engine/runtime.json` are loaded at startup from the Vite-published asset root. Public API is registered as a runtime service. Awaiting current build verification.
-- [~] `src/engine/assets/` — generic cached asset manager with safe paths, deduplicated loads, one-time missing-asset warnings, placeholder fallback, and cache invalidation; public API is registered in the runtime service registry. Awaiting current build verification.
-- [~] `src/engine/input/` — keyboard, mouse, and gamepad bindings with action maps and press/release transitions; manager is polled from the engine `input` phase, and Space is bound to the demo spin toggle. Transient presses/releases and mouse deltas accumulate across multiple fixed steps using reusable sets; the main bootstrap clears them after render consumers. Awaiting current build verification.
-- [~] `src/engine/debug/` — DOM stats/error/log overlay with FPS and frame-time sampling, global error/rejection reporting, and bounded log history; created by the browser bootstrap and registered as a service. The first CI pass exposed and fixed a misplaced factory declaration in `types.ts` and an unused input import; rerun verification is pending.
-- [~] Hello-engine demo scene — data-driven canvas cube renderer loaded from `assets/data/demo/hello-engine.json`; integrated into the engine `render` phase with Space pause/resume and the diagnostics FPS overlay. Awaiting current build verification.
+- [x] `src/engine/services/` — typed service-map and registry; duplicate-safe registration, get/require/has/unregister/clear, and identity-safe cleanup handles; public API exported and registered in `src/main.ts`. Verified by run #88 (`npm ci` + `npm run build`).
+- [x] `src/engine/config/` — validated JSON loader with safe relative paths, in-flight deduplication, retry after failures, and cache invalidation; runtime schema and `assets/data/engine/runtime.json` are loaded at startup from the Vite-published asset root. Public API is registered as a runtime service. Verified by run #88 (`npm ci` + `npm run build`).
+- [x] `src/engine/assets/` — generic cached asset manager with safe paths, deduplicated loads, one-time missing-asset warnings, placeholder fallback, and cache invalidation; public API is registered in the runtime service registry. Verified by run #88 (`npm ci` + `npm run build`).
+- [x] `src/engine/input/` — keyboard, mouse, and gamepad bindings with action maps and press/release transitions; manager is polled from the engine `input` phase, and Space is bound to the demo spin toggle. Transient presses/releases and mouse deltas accumulate across multiple fixed steps using reusable sets; the main bootstrap clears them after render consumers. Verified by run #88 (`npm ci` + `npm run build`).
+- [x] `src/engine/debug/` — DOM stats/error/log overlay with FPS and frame-time sampling, global error/rejection reporting, and bounded log history; created by the browser bootstrap and registered as a service. Verified by run #88 (`npm ci` + `npm run build`).
+- [x] Hello-engine demo scene — data-driven canvas cube renderer loaded from `assets/data/demo/hello-engine.json`; integrated into the engine `render` phase with Space pause/resume and the diagnostics FPS overlay. Verified by run #88 (`npm ci` + `npm run build`).
 
 ## Phase 2 — Rendering (Unreal-type look)
 
