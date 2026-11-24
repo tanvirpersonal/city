@@ -14,7 +14,7 @@ export interface HelloSceneConfig {
 }
 
 /** Relative to the config loader base URL. */
-export const HELLO_SCENE_CONFIG_PATH = "demo/hello-engine.json";
+export const HELLO_SCENE_CONFIG_PATH = "data/demo/hello-engine.json";
 
 /** Validate the JSON settings before they reach the render loop. */
 export function isHelloSceneConfig(value: unknown): value is HelloSceneConfig {
