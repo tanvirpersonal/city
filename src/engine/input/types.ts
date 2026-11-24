@@ -43,6 +43,8 @@ export interface InputManager {
   readonly mouseDeltaY: number;
   /** Poll gamepads and publish action transitions. Called in the engine input phase. */
   poll(): void;
+  /** Clear transient presses, releases, and mouse deltas after all render consumers run. */
+  endFrame(): void;
   /** Remove browser listeners and clear state. */
   dispose(): void;
 }
