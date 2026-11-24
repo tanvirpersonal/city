@@ -4,13 +4,13 @@
 > Markers: `[ ]` not started · `[~]` in progress (note what is left) · `[x]` done+pushed+builds · `[!]` blocked
 > If this file and the file system disagree, trust the file system and fix this file.
 
-**Current phase:** Phase 1 — Foundation (1 of 11 items done, 1 in progress; next: `src/engine/core/` once the deploy workflow is confirmed)
+**Current phase:** Phase 1 — Foundation (2 of 11 items done, 1 in progress; next: `src/engine/ecs/`)
 **Last updated by:** Claude, 2026-11-25
-**Overall progress:** 14 / 96 items done (~15%), 1 in progress — Phase 0: 13/13 · Phase 1: 1/11 · Phases 2–11: 0/72
+**Overall progress:** 15 / 96 items done (~16%), 1 in progress — Phase 0: 13/13 · Phase 1: 2/11 · Phases 2–11: 0/72
 
 **Open notes for the owner / next AI:**
 - `package-lock.json` is committed and verified (`npm ci` + `npm run build` pass on a fresh clone), so the deploy workflow uses `npm ci`.
-- `src/main.ts` is a minimal placeholder so the build passes; the engine bootstrap replaces it in the `core/` item.
+- `src/main.ts` now creates and starts the core engine (no visuals yet); the hello-engine demo item replaces its body later.
 - **Owner action needed for deploy:** in the GitHub repo go to Settings → Pages → Source and choose **GitHub Actions**. Then check the Actions tab for a green "Deploy to GitHub Pages" run. The AI cannot see Actions runs, so this has not been confirmed.
 
 ---
@@ -35,7 +35,7 @@
 
 - [x] Project setup: `package.json`, `package-lock.json`, `tsconfig.json` (strict), `vite.config.ts`, `index.html`, `.gitignore` (+ placeholder `src/main.ts`; `npm ci` and `npm run build` verified on a fresh clone)
 - [~] GitHub Pages deploy workflow (`.github/workflows/deploy.yml`) — pushed, valid YAML, same `npm ci` + `npm run build` steps verified locally. Left: owner sets Pages source to GitHub Actions and confirms the first run is green, then mark `[x]`.
-- [ ] `src/engine/core/` — engine bootstrap, fixed-timestep game loop, time
+- [x] `src/engine/core/` — engine bootstrap, fixed-timestep game loop, time (`createEngine()`, phase hooks via `engine.on(phase, fn)`, 60 Hz fixed step with spiral cap; `npm run build` passes; loop behavior checked with a throwaway test, real tests come in Phase 11)
 - [ ] `src/engine/ecs/` — entities, components, systems, queries
 - [ ] `src/engine/events/` — typed event bus
 - [ ] `src/engine/services/` — service registry
