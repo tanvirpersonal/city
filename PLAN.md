@@ -4,7 +4,7 @@
 > Markers: `[ ]` not started · `[~]` in progress (note what is left) · `[x]` done+pushed+builds · `[!]` blocked
 > If this file and the file system disagree, trust the file system and fix this file.
 
-**Current phase:** Phase 0 — Planning
+**Current phase:** Phase 1 — Foundation (Phase 0 planning is complete)
 **Last updated by:** Claude, 2026-11-25
 
 ---
@@ -23,7 +23,7 @@
 - [x] `docs/RENDERING.md` — Unreal-type graphics plan
 - [x] `docs/PHYSICS.md` — physics plan
 - [x] `docs/OPEN_WORLD.md` — streaming, roads, traffic, pedestrians, missions
-- [ ] `docs/EDITOR.md` — in-engine editor plan
+- [x] `docs/EDITOR.md` — in-engine editor plan
 
 ## Phase 1 — Foundation
 
