@@ -8,7 +8,7 @@ class TypedEventBus<Events extends EventMap> implements EventBus<Events> {
 
   on<K extends keyof Events & string>(event: K, listener: (payload: Events[K]) => void): Unsubscribe {
     const bucket = this.getOrCreateBucket(event);
-    const typedListener = listener as Listener;
+    const typedListener = listener as unknown as Listener;
     bucket.add(typedListener);
     let active = true;
 
