@@ -1,4 +1,4 @@
-import type { InputActionMap, InputBinding, InputManager, InputManagerOptions } from "./types";
+import type { InputBinding, InputManager, InputManagerOptions } from "./types";
 
 class BrowserInputManager implements InputManager {
   private readonly target: Window;
