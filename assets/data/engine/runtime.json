@@ -1,0 +1,7 @@
+{
+  "core": {
+    "fixedHz": 60,
+    "maxFrameSeconds": 0.25,
+    "maxStepsPerFrame": 5
+  }
+}
