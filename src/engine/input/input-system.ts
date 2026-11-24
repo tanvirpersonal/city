@@ -6,6 +6,8 @@ class BrowserInputManager implements InputManager {
   private readonly actionBindings = new Map<string, readonly InputBinding[]>();
   private readonly currentValues = new Map<string, number>();
   private readonly previousValues = new Map<string, number>();
+  private readonly pressedActions = new Set<string>();
+  private readonly releasedActions = new Set<string>();
   private readonly keysDown = new Set<string>();
   private readonly mouseButtonsDown = new Set<number>();
   private pendingMouseX = 0;
@@ -45,6 +47,8 @@ class BrowserInputManager implements InputManager {
     this.frameMouseY = 0;
     this.currentValues.clear();
     this.previousValues.clear();
+    this.pressedActions.clear();
+    this.releasedActions.clear();
   };
 
   constructor(options: InputManagerOptions = {}) {
@@ -80,11 +84,15 @@ class BrowserInputManager implements InputManager {
     this.actionBindings.set(name, bindings.slice());
     this.currentValues.set(name, 0);
     this.previousValues.set(name, 0);
+    this.pressedActions.delete(name);
+    this.releasedActions.delete(name);
   }
 
   unbindAction(action: string): boolean {
     this.currentValues.delete(action);
     this.previousValues.delete(action);
+    this.pressedActions.delete(action);
+    this.releasedActions.delete(action);
     return this.actionBindings.delete(action);
   }
 
@@ -93,11 +101,11 @@ class BrowserInputManager implements InputManager {
   }
 
   wasActionPressed(action: string): boolean {
-    return (this.currentValues.get(action) ?? 0) > 0 && (this.previousValues.get(action) ?? 0) <= 0;
+    return this.pressedActions.has(action);
   }
 
   wasActionReleased(action: string): boolean {
-    return (this.currentValues.get(action) ?? 0) <= 0 && (this.previousValues.get(action) ?? 0) > 0;
+    return this.releasedActions.has(action);
   }
 
   getActionValue(action: string): number {
@@ -120,19 +128,30 @@ class BrowserInputManager implements InputManager {
       this.gamepads = [];
     }
 
-    this.frameMouseX = this.pendingMouseX;
-    this.frameMouseY = this.pendingMouseY;
+    this.frameMouseX += this.pendingMouseX;
+    this.frameMouseY += this.pendingMouseY;
     this.pendingMouseX = 0;
     this.pendingMouseY = 0;
 
     for (const [action, bindings] of this.actionBindings) {
-      this.previousValues.set(action, this.currentValues.get(action) ?? 0);
+      const previous = this.currentValues.get(action) ?? 0;
+      this.previousValues.set(action, previous);
       let value = 0;
       for (const binding of bindings) {
         value = Math.max(value, this.readBinding(binding));
       }
-      this.currentValues.set(action, Math.min(value, 1));
+      const next = Math.min(value, 1);
+      if (previous <= 0 && next > 0) this.pressedActions.add(action);
+      if (previous > 0 && next <= 0) this.releasedActions.add(action);
+      this.currentValues.set(action, next);
     }
+  }
+
+  endFrame(): void {
+    this.pressedActions.clear();
+    this.releasedActions.clear();
+    this.frameMouseX = 0;
+    this.frameMouseY = 0;
   }
 
   dispose(): void {
@@ -147,6 +166,8 @@ class BrowserInputManager implements InputManager {
     this.actionBindings.clear();
     this.currentValues.clear();
     this.previousValues.clear();
+    this.pressedActions.clear();
+    this.releasedActions.clear();
     this.keysDown.clear();
     this.mouseButtonsDown.clear();
     this.gamepads = [];
