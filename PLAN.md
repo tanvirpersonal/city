@@ -61,7 +61,7 @@
 - [~] PBR material system (albedo, normal, roughness, metal, AO, emissive) — split into small steps (2026-11-26); mark the parent `[x]` only when 3e is done. Design: `docs/RENDERING.md` §3, texture folders: `ASSETS.md` §2:
   - [x] 3a `render/materials/types.ts` + `definition.ts`: material JSON shape (`version`, `name`, `category`, texture folder, scalar fallbacks for roughness/metallic/AO/emissive, `normalScale`, `uvScale`) and the `isMaterialDefinition` validator — builds; not exported from `render/index.ts` until 3e
   - [x] 3b `assets/data/materials/categories.json` (fallback tint + default roughness per category) + `render/materials/categories.ts` validator and loader — builds; not exported from `render/index.ts` until 3e
-  - [ ] 3c `render/materials/material-factory.ts`: build a PBR material from a definition using flat values and the category tint (no textures yet)
+  - [x] 3c `render/materials/material-factory.ts`: build a PBR material from a definition using flat values and the category tint (no textures yet) — `resolveMaterialParams` + `createFlatPbrMaterial`; builds; not exported from `render/index.ts` until 3e
   - [ ] 3d `render/materials/texture-set.ts`: load the texture folder through the asset manager; missing maps become procedural flat textures (flat normal, roughness 0.8, no metal, AO 1); albedo and emissive are sRGB
   - [ ] 3e `render/materials/index.ts` public API + sample `assets/data/materials/*.json`; the self-test cube uses a library material (with a temporary light in the test scene until the lighting item replaces it)
 - [ ] Procedural placeholder textures
