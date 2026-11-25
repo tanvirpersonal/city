@@ -67,6 +67,7 @@ class JsonConfigLoader implements ConfigLoader {
       normalized.includes("\\") ||
       normalized.includes("?") ||
       normalized.includes("#") ||
+      normalized.includes("%") || // "%2e%2e" is read as ".." by URL parsing; paths never need encoding
       normalized.includes("://")
     ) {
       throw new Error(`config: invalid relative path "${path}"`);
