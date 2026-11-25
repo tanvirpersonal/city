@@ -1,3 +1,5 @@
+import type { RenderMaterial } from "./materials";
+
 /** Shared types for the render system. Design: docs/RENDERING.md (decisions D-003, D-010). */
 
 /** Graphics backend in use. WebGPU is tried first; WebGL2 is the automatic fallback (D-003). */
@@ -49,6 +51,8 @@ export interface RendererOptions {
   readonly clearColor?: string;
   /** Draw a spinning self-test cube so a blank scene still proves the backend works. */
   readonly showTestCube?: boolean;
+  /** Material for the self-test cube (owned by the caller's material library). Defaults to a normals view. */
+  readonly testCubeMaterial?: RenderMaterial;
   /** Receives one-line warnings such as "WebGPU unavailable, using WebGL2". */
   readonly onWarning?: (message: string, reason?: unknown) => void;
 }

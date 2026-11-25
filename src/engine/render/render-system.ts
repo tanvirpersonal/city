@@ -1,13 +1,15 @@
 import {
+  AmbientLight,
   BoxGeometry,
   Color,
+  DirectionalLight,
   Mesh,
   MeshNormalMaterial,
   PerspectiveCamera,
   Scene,
   WebGPURenderer,
 } from "three/webgpu";
-import { DEFAULT_CAMERA, DEFAULT_CLEAR_COLOR, TEST_CUBE } from "./defaults";
+import { DEFAULT_CAMERA, DEFAULT_CLEAR_COLOR, TEST_CUBE, TEST_LIGHTS } from "./defaults";
 import type { QualityPreset, RenderBackend, Renderer, RendererOptions, RenderStats } from "./types";
 
 /** WebGPURenderer picks WebGPU or its WebGL2 fallback backend during init(); read which one won. */
@@ -42,12 +44,21 @@ export async function createRenderer(options: RendererOptions): Promise<Renderer
   camera.position.set(0, 0, DEFAULT_CAMERA.distance);
 
   let testCube: Mesh | undefined;
+  // Only the normals material is created here, so only it is disposed here; a caller's material is theirs.
+  let ownedCubeMaterial: MeshNormalMaterial | undefined;
   if (options.showTestCube === true) {
+    const supplied = options.testCubeMaterial;
+    if (supplied === undefined) ownedCubeMaterial = new MeshNormalMaterial();
     testCube = new Mesh(
       new BoxGeometry(TEST_CUBE.size, TEST_CUBE.size, TEST_CUBE.size),
-      new MeshNormalMaterial(),
+      supplied ?? ownedCubeMaterial,
     );
     scene.add(testCube);
+    if (supplied !== undefined) {
+      const sun = new DirectionalLight(TEST_LIGHTS.color, TEST_LIGHTS.sunIntensity);
+      sun.position.set(TEST_LIGHTS.sunPosition.x, TEST_LIGHTS.sunPosition.y, TEST_LIGHTS.sunPosition.z);
+      scene.add(sun, new AmbientLight(TEST_LIGHTS.color, TEST_LIGHTS.ambientIntensity));
+    }
   }
 
   let quality: QualityPreset = options.quality;
@@ -101,10 +112,8 @@ export async function createRenderer(options: RendererOptions): Promise<Renderer
     dispose(): void {
       if (disposed) return;
       disposed = true;
-      if (testCube !== undefined) {
-        testCube.geometry.dispose();
-        (testCube.material as MeshNormalMaterial).dispose();
-      }
+      testCube?.geometry.dispose();
+      ownedCubeMaterial?.dispose();
       void gpu.dispose();
     },
   };
