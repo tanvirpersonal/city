@@ -13,8 +13,8 @@ import { createInputManager } from "@engine/input";
 import type { InputManager } from "@engine/input";
 import { createDebugOverlay } from "@engine/debug";
 import type { DebugOverlay } from "@engine/debug";
-import { createRenderer, DEFAULT_QUALITY, loadQualityPreset } from "@engine/render";
-import type { Renderer } from "@engine/render";
+import { createMaterialLibrary, createRenderer, DEFAULT_QUALITY, loadQualityPreset } from "@engine/render";
+import type { MaterialLibrary, Renderer } from "@engine/render";
 import {
   createHelloEngineScene,
   HELLO_SCENE_CONFIG_PATH,
@@ -36,6 +36,7 @@ interface RuntimeServices extends ServiceMap {
   input: InputManager;
   debug: DebugOverlay;
   renderer: Renderer;
+  materials: MaterialLibrary;
 }
 
 /**
@@ -46,9 +47,10 @@ async function mountRenderer(
   engine: Engine,
   root: HTMLElement,
   config: ConfigLoader,
+  assets: AssetManager,
   clearColor: string,
   debug: DebugOverlay,
-): Promise<{ readonly renderer: Renderer | undefined; dispose(): void }> {
+): Promise<{ readonly renderer: Renderer | undefined; readonly materials: MaterialLibrary | undefined; dispose(): void }> {
   const canvas = document.createElement("canvas");
   canvas.setAttribute("aria-label", "Renderer self-test");
   Object.assign(canvas.style, {
@@ -63,13 +65,23 @@ async function mountRenderer(
   });
   root.append(canvas);
 
+  let materials: MaterialLibrary | undefined;
   try {
     const quality = await loadQualityPreset(config, DEFAULT_QUALITY);
+    materials = await createMaterialLibrary({
+      config,
+      assets,
+      onWarning: (message) => debug.log(message, "warn"),
+    }).catch((error: unknown) => {
+      debug.reportError(error);
+      return undefined;
+    });
     const renderer = await createRenderer({
       canvas,
       quality,
       clearColor,
       showTestCube: true,
+      testCubeMaterial: await materials?.get("concrete-01"),
       onWarning: (message) => debug.log(message, "warn"),
     });
     const resize = (): void => {
@@ -85,19 +97,22 @@ async function mountRenderer(
     debug.log(`Renderer online: ${renderer.backend}, quality ${renderer.quality.name}.`);
     return {
       renderer,
+      materials,
       dispose: (): void => {
         debug.setExtraStats(undefined);
         removeRenderHook();
         window.removeEventListener("resize", resize);
         renderer.dispose();
+        materials?.dispose();
         canvas.remove();
       },
     };
   } catch (error) {
     canvas.remove();
+    materials?.dispose();
     debug.reportError(error);
     debug.log("Renderer unavailable; continuing without the 3D self-test.", "warn");
-    return { renderer: undefined, dispose: (): void => undefined };
+    return { renderer: undefined, materials: undefined, dispose: (): void => undefined };
   }
 }
 
@@ -140,7 +155,7 @@ async function bootstrap(root: HTMLElement): Promise<void> {
   // Registered after the demo scene so transient input survives every render consumer.
   const clearInputFrame = engine.on("render", () => input.endFrame());
   events.on("engine:error", ({ error }) => debug.reportError(error));
-  const rendering = await mountRenderer(engine, root, config, sceneConfig.backgroundColor, debug);
+  const rendering = await mountRenderer(engine, root, config, assets, sceneConfig.backgroundColor, debug);
 
   services.register("engine", engine);
   services.register("ecs", ecs);
@@ -150,6 +165,7 @@ async function bootstrap(root: HTMLElement): Promise<void> {
   services.register("input", input);
   services.register("debug", debug);
   if (rendering.renderer !== undefined) services.register("renderer", rendering.renderer);
+  if (rendering.materials !== undefined) services.register("materials", rendering.materials);
 
   if (configError !== undefined) {
     debug.reportError(configError);
