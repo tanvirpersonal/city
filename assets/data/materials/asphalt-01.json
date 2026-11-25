@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "name": "asphalt-01",
+  "category": "roads",
+  "textureFolder": "textures/roads/asphalt-01",
+  "uvScale": 4
+}
