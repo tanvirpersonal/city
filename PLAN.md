@@ -5,8 +5,8 @@
 > If this file and the file system disagree, trust the file system and fix this file.
 
 **Current phase:** Phase 2 — Rendering (started 2026-11-26; Phase 1 foundation complete, 11/11 verified)
-**Last updated by:** Claude, 2026-11-25
-**Overall progress:** 24 / 96 items verified (25%), none in progress — Phase 0: 13/13 · Phase 1: 11/11 · Phases 2–11: 0/72
+**Last updated by:** Claude, 2026-11-26
+**Overall progress:** 25 / 96 items verified (26%), none in progress — Phase 0: 13/13 · Phase 1: 11/11 · Phase 2: 1/14 · Phases 3–11: 0/58
 
 **Open notes for the owner / next AI:**
 - `package-lock.json` is committed and verified (`npm ci` + `npm run build` pass on a fresh clone), so the deploy workflow uses `npm ci`.
@@ -51,7 +51,7 @@
 
 ## Phase 2 — Rendering (Unreal-type look)
 
-- [~] Renderer wrapper (WebGPU first, WebGL2 fallback) in `src/engine/render/` — split into small steps (2026-11-26); mark the parent `[x]` only when 2e is done:
+- [x] Renderer wrapper (WebGPU first, WebGL2 fallback) in `src/engine/render/` — done 2026-11-26 in small steps 2a–2e; GitHub Actions run for commit `4c5d8fa` passed (`npm ci`, `npm run build`, Pages deploy). Follow-up 2f is tracked below:
   - [x] 2a Add the `three` dependency (`package.json` + `package-lock.json`) and note the install in `docs/TECH_STACK.md` — `three` 0.187 + `@types/three` 0.187 (dev); `npm run build` passes
   - [x] 2b `render/types.ts` (backend, quality preset, renderer API types) — plus the `render/index.ts` type exports; the folder is not imported by `main.ts` until 2e
   - [x] 2c Quality preset JSON: `assets/data/quality/{low,medium,high,ultra}.json` (values from `docs/RENDERING.md` §9; DOF and motion blur are `false` in every preset until those passes exist) + `render/quality.ts` validator and loader
