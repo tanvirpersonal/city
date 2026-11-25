@@ -81,7 +81,7 @@ Never use globals, `window` properties, or reach into another system's internal 
 ## 6. Data-driven design
 
 - Vehicle handling, weapons, materials, missions, weather presets live in JSON under `assets/data/`.
-- Systems load config through `config.load("vehicles/sedan.json", validator)`; the loader deduplicates in-flight requests, caches validated results, and supports explicit cache invalidation.
+- Systems load config through `config.load("data/vehicles/sedan.json", validator)` (paths are relative to the published asset root, so they start with `data/`); the loader deduplicates in-flight requests, caches validated results, and supports explicit cache invalidation.
 - Each JSON consumer supplies a type guard / validator. Invalid JSON or a shape mismatch fails with a path-specific error before data reaches the system.
 - Runtime engine settings are stored under `assets/data/engine/`; Vite publishes the repository `assets/` directory at the static site root.
 
