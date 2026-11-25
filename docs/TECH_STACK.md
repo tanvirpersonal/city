@@ -10,7 +10,8 @@
 | `typescript` (strict) | Language | Type safety across many AI sessions |
 | `vite` | Dev server and bundler | Fast, simple static output for GitHub Pages |
 | `@types/node` (dev) | Node type definitions | `vite.config.ts` uses `node:url` to build path aliases; types only, not shipped |
-| `three` | Rendering (WebGPU renderer + WebGL2 fallback) | PBR, scene graph, loaders, huge ecosystem |
+| `three` | Rendering (WebGPU renderer + WebGL2 fallback) | PBR, scene graph, loaders, huge ecosystem. Installed in Phase 2 (0.187); imported only inside `src/engine/render/` (and asset loaders), via `three` and `three/webgpu` |
+| `@types/three` (dev) | Type definitions for `three` | `three` ships no types of its own; version must match `three` (0.187); types only, not shipped |
 | `@dimforge/rapier3d-compat` | Physics (WASM) | Fast rigid bodies, colliders, character and vehicle controllers |
 
 ## Planned (add when the phase starts)
