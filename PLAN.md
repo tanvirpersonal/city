@@ -58,7 +58,12 @@
   - [x] 2d `render/render-system.ts` + `render/index.ts`: backend selection with fallback log, resize, frame render with `alpha`, draw/triangle stats, dispose — type-checks; not yet imported by `main.ts` (that is 2e), so it is not yet run in a browser
   - [x] 2e Wire into `src/main.ts` (engine `render` phase, `renderer` service, backend + quality logged to the debug overlay) — the renderer draws a spinning self-test cube on its own inset canvas (bottom-right) so the Phase 1 demo keeps running; `npm run build` passes; docs needed no change. Not yet checked in a real browser: confirm on the deployed Pages site that the inset cube spins and the log says which backend is active
   - [x] 2f Debug overlay shows backend, quality, draw calls and triangles from `renderer.stats` via the new `debug.setExtraStats()` hook; `npm run build` passes
-- [ ] PBR material system (albedo, normal, roughness, metal, AO, emissive)
+- [~] PBR material system (albedo, normal, roughness, metal, AO, emissive) — split into small steps (2026-11-26); mark the parent `[x]` only when 3e is done. Design: `docs/RENDERING.md` §3, texture folders: `ASSETS.md` §2:
+  - [ ] 3a `render/materials/types.ts` + `definition.ts`: material JSON shape (`version`, `name`, `category`, texture folder, scalar fallbacks for roughness/metallic/AO/emissive, `normalScale`, `uvScale`) and the `isMaterialDefinition` validator
+  - [ ] 3b `assets/data/materials/categories.json` (fallback tint + default roughness per category) + `render/materials/categories.ts` validator and loader
+  - [ ] 3c `render/materials/material-factory.ts`: build a PBR material from a definition using flat values and the category tint (no textures yet)
+  - [ ] 3d `render/materials/texture-set.ts`: load the texture folder through the asset manager; missing maps become procedural flat textures (flat normal, roughness 0.8, no metal, AO 1); albedo and emissive are sRGB
+  - [ ] 3e `render/materials/index.ts` public API + sample `assets/data/materials/*.json`; the self-test cube uses a library material (with a temporary light in the test scene until the lighting item replaces it)
 - [ ] Procedural placeholder textures
 - [ ] Lighting: sun/moon directional, point/spot lights, image-based lighting (HDR sky)
 - [ ] Cascaded shadow maps
