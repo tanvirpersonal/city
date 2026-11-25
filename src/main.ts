@@ -79,10 +79,14 @@ async function mountRenderer(
     resize();
     window.addEventListener("resize", resize);
     const removeRenderHook = engine.on("render", (frame) => renderer.render(frame.alpha));
+    debug.setExtraStats(
+      () => `${renderer.backend} · ${renderer.quality.name} · ${renderer.stats.drawCalls} draws · ${renderer.stats.triangles} tris`,
+    );
     debug.log(`Renderer online: ${renderer.backend}, quality ${renderer.quality.name}.`);
     return {
       renderer,
       dispose: (): void => {
+        debug.setExtraStats(undefined);
         removeRenderHook();
         window.removeEventListener("resize", resize);
         renderer.dispose();

@@ -57,7 +57,7 @@
   - [x] 2c Quality preset JSON: `assets/data/quality/{low,medium,high,ultra}.json` (values from `docs/RENDERING.md` §9; DOF and motion blur are `false` in every preset until those passes exist) + `render/quality.ts` validator and loader
   - [x] 2d `render/render-system.ts` + `render/index.ts`: backend selection with fallback log, resize, frame render with `alpha`, draw/triangle stats, dispose — type-checks; not yet imported by `main.ts` (that is 2e), so it is not yet run in a browser
   - [x] 2e Wire into `src/main.ts` (engine `render` phase, `renderer` service, backend + quality logged to the debug overlay) — the renderer draws a spinning self-test cube on its own inset canvas (bottom-right) so the Phase 1 demo keeps running; `npm run build` passes; docs needed no change. Not yet checked in a real browser: confirm on the deployed Pages site that the inset cube spins and the log says which backend is active
-  - [ ] 2f Debug overlay shows draw calls and triangles from `renderer.stats` (needs a small stats hook in `src/engine/debug/`)
+  - [x] 2f Debug overlay shows backend, quality, draw calls and triangles from `renderer.stats` via the new `debug.setExtraStats()` hook; `npm run build` passes
 - [ ] PBR material system (albedo, normal, roughness, metal, AO, emissive)
 - [ ] Procedural placeholder textures
 - [ ] Lighting: sun/moon directional, point/spot lights, image-based lighting (HDR sky)
