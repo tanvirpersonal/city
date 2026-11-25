@@ -44,7 +44,7 @@ class BrowserInputManager implements InputManager {
     this.pendingMouseY = 0;
     this.frameMouseX = 0;
     this.frameMouseY = 0;
-    this.currentValues.clear();
+    // Keep currentValues: the next poll() then reports the release edge of every held action.
     this.pressedActions.clear();
     this.releasedActions.clear();
   };
