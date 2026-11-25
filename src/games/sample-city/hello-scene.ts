@@ -74,7 +74,8 @@ export function createHelloEngineScene(
   let viewWidth = 1;
   let viewHeight = 1;
   let pixelRatio = 1;
-  let rotation = 0;
+  let yaw = 0;
+  let pitch = 0;
   let spinning = true;
 
   const resize = (): void => {
@@ -89,14 +90,19 @@ export function createHelloEngineScene(
 
   const draw = (deltaSeconds: number): void => {
     if (input.wasActionPressed("toggle-spin")) spinning = !spinning;
-    if (spinning) rotation = (rotation + deltaSeconds * config.rotationSpeed) % (Math.PI * 2);
+    if (spinning) {
+      const step = deltaSeconds * config.rotationSpeed;
+      // Wrap each angle on its own: wrapping only the yaw makes the pitch snap on every
+      // revolution whenever verticalRotationFactor is not a whole number.
+      yaw = (yaw + step) % (Math.PI * 2);
+      pitch = (pitch + step * config.verticalRotationFactor) % (Math.PI * 2);
+    }
 
     context.fillStyle = config.backgroundColor;
     context.fillRect(0, 0, viewWidth, viewHeight);
 
-    const cosY = Math.cos(rotation);
-    const sinY = Math.sin(rotation);
-    const pitch = rotation * config.verticalRotationFactor;
+    const cosY = Math.cos(yaw);
+    const sinY = Math.sin(yaw);
     const cosX = Math.cos(pitch);
     const sinX = Math.sin(pitch);
     const centerX = viewWidth * 0.5;

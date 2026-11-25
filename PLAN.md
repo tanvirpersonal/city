@@ -15,6 +15,7 @@
 - The typed Event Bus is verified by workflow run #26: `npm ci` and `npm run build` passed after the complete event system and public API were committed.
 - All remaining Phase 1 systems are integrated into `src/main.ts`; run #89 passed `npm ci`, `npm run build`, artifact upload, and Pages deployment. A reported browser `Illegal invocation` in the config loader was fixed by binding native fetch to `globalThis`; run #93 then passed build and deployment.
 - `docs/ARCHITECTURE.md` was updated to match the shipped typed Event Bus, Service Registry, validated Config Loader, Asset Manager fallback contract, and diagnostics overlay.
+- **Phase 1 audit (2026-11-25, in progress):** bugs found in the Phase 1 code are fixed one per commit (`fix:` commits on `main` after `c92a9e8`). Planned order: demo cube pitch snap (done in this commit) · event bus stale unsubscribe after `clear()` · core phase dispatch skipping a handler after an unsubscribe · ECS stale system unregister handle · ECS query base store chosen once · config/asset default base URL vs D-013 · `%2e` path hardening · input blur dropping release edges · docs (`DECISIONS.md` literal `\n`, README status, STRUCTURE markers) · JSON `version` fields · page restore from the back/forward cache. The next AI should check `git log` and finish any item that has no commit yet.
 
 ---
 
