@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "name": "ultra",
+  "renderScale": 1,
+  "shadowCascades": 4,
+  "shadowMapSize": 4096,
+  "ssao": true,
+  "ssr": true,
+  "antiAliasing": "taa",
+  "maxShadowLocalLights": 8,
+  "viewDistanceChunks": 9,
+  "depthOfField": false,
+  "motionBlur": false
+}
