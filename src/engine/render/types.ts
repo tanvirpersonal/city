@@ -45,6 +45,10 @@ export interface RendererOptions {
   readonly quality: QualityPreset;
   /** Skip the WebGPU attempt and go straight to WebGL2. */
   readonly forceWebGL2?: boolean;
+  /** CSS color of the empty background. Defaults to DEFAULT_CLEAR_COLOR. */
+  readonly clearColor?: string;
+  /** Draw a spinning self-test cube so a blank scene still proves the backend works. */
+  readonly showTestCube?: boolean;
   /** Receives one-line warnings such as "WebGPU unavailable, using WebGL2". */
   readonly onWarning?: (message: string, reason?: unknown) => void;
 }
