@@ -1,4 +1,9 @@
+import type { MeshStandardMaterial } from "three/webgpu";
+
 /** Types for the PBR material system. Design: docs/RENDERING.md §3, texture folders: ASSETS.md §2. */
+
+/** The material object the renderer draws with. Other systems pass it around without touching its internals. */
+export type RenderMaterial = MeshStandardMaterial;
 
 /** Folder categories under `assets/textures/` plus "generic" for materials without a folder. */
 export const MATERIAL_CATEGORIES = [

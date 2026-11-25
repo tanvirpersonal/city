@@ -7,6 +7,11 @@ const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;
 /** Relative path inside `textures/`, lowercase kebab-case segments only (ASSETS.md: no spaces, no "..", no "%"). */
 const TEXTURE_FOLDER = /^textures(\/[a-z0-9]+(-[a-z0-9]+)*)+$/;
 
+/** True for a valid material name: lowercase kebab-case, usable as a file and folder name. */
+export function isMaterialName(value: unknown): value is string {
+  return typeof value === "string" && KEBAB_CASE.test(value);
+}
+
 export function isMaterialCategory(value: unknown): value is MaterialCategory {
   return typeof value === "string" && (MATERIAL_CATEGORIES as readonly string[]).includes(value);
 }
@@ -26,7 +31,7 @@ export function isMaterialDefinition(value: unknown): value is MaterialDefinitio
 
   return (
     typeof material.version === "number" && Number.isInteger(material.version) && material.version >= 1 &&
-    typeof material.name === "string" && KEBAB_CASE.test(material.name) &&
+    isMaterialName(material.name) &&
     isMaterialCategory(material.category) &&
     (material.textureFolder === undefined ||
       (typeof material.textureFolder === "string" && TEXTURE_FOLDER.test(material.textureFolder))) &&
