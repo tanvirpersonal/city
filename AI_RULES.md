@@ -20,6 +20,34 @@ The human owner works on a limited usage plan. Sessions get cut off without warn
    then fix the checklist.
 6. Do NOT start a different task than the first unchecked item unless the owner says so.
 
+## 0b. Recent repository changes — read before continuing
+
+This section is a chronological handoff log. It records structural changes made by the assistant
+so Claude and future agents can understand the repository state without guessing. New entries must
+be added at the top, with the local date/time and commit hash. Times use Bangladesh Standard Time
+(BST, UTC+06:00).
+
+### 2026-11-26, 03:01:30 BST (UTC+06:00) — Asset directory scaffolding
+
+- **Commit:** `64ec8028ba981a1fe690222a35d34a20c275b78b`
+- **Commit message:** `chore(assets): add directory structure from ASSETS.md`
+- **Branch:** `main`
+- Created 40 asset directories following the exact paths and categories documented in `ASSETS.md`.
+- Added a `.gitkeep` placeholder file inside each directory so Git tracks the otherwise-empty folders.
+- Created directory groups for PBR textures (roads, buildings, terrain, props, vehicles, interiors,
+  water, decals, signs, particles, sky), HDRI skies, 3D models (characters, vehicles, props,
+  buildings, weapons), and audio (vehicles, characters, weapons, ambience, music).
+- This was **directory scaffolding only**. No real textures, HDRI files, GLB models, audio, or other
+  production assets were added, generated, downloaded, or modified.
+- No engine source code, TypeScript, runtime logic, material JSON, package/dependency files, or
+  build configuration was changed.
+- No asset row in `ASSETS.md` should be marked as provided (`[x]`) because the real asset files
+  are still missing. The existing procedural placeholders remain necessary.
+- The repository build was **not run as part of this directory-only change**. Do not infer that this
+  commit verifies runtime loading or visual appearance.
+- **Next agent action:** inspect the actual tree and confirm the folders exist; when the owner adds
+  real assets, verify each file at its exact path before updating its status in `ASSETS.md`.
+
 ## 1. Push rules (most important)
 
 1. **Push after EVERY file you create or change.** One file (or one tight logical change) = one commit = one push.
