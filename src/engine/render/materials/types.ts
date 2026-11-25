@@ -21,7 +21,7 @@ export type TextureSlot = (typeof TEXTURE_SLOTS)[number];
 
 /**
  * One material, loaded from `assets/data/materials/<name>.json`.
- * Scalars are the values used when the matching texture map is missing, and multipliers otherwise.
+ * Scalars are the values used when the matching texture map is missing; when a map exists it drives that property.
  * Unset optional numbers fall back to the category defaults in `categories.json`.
  */
 export interface MaterialDefinition {
