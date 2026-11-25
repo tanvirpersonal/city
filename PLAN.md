@@ -6,7 +6,7 @@
 
 **Current phase:** Phase 2 — Rendering (started 2026-11-26; Phase 1 foundation complete, 11/11 verified)
 **Last updated by:** Claude, 2026-11-26
-**Overall progress:** 25 / 96 items verified (26%), none in progress — Phase 0: 13/13 · Phase 1: 11/11 · Phase 2: 1/14 · Phases 3–11: 0/58
+**Overall progress:** 26 / 96 items verified (27%), none in progress — Phase 0: 13/13 · Phase 1: 11/11 · Phase 2: 2/14 · Phases 3–11: 0/58. Next: "Procedural placeholder textures" (Phase 2).
 
 **Open notes for the owner / next AI:**
 - `package-lock.json` is committed and verified (`npm ci` + `npm run build` pass on a fresh clone), so the deploy workflow uses `npm ci`.
@@ -58,7 +58,7 @@
   - [x] 2d `render/render-system.ts` + `render/index.ts`: backend selection with fallback log, resize, frame render with `alpha`, draw/triangle stats, dispose — type-checks; not yet imported by `main.ts` (that is 2e), so it is not yet run in a browser
   - [x] 2e Wire into `src/main.ts` (engine `render` phase, `renderer` service, backend + quality logged to the debug overlay) — the renderer draws a spinning self-test cube on its own inset canvas (bottom-right) so the Phase 1 demo keeps running; `npm run build` passes; docs needed no change. Not yet checked in a real browser: confirm on the deployed Pages site that the inset cube spins and the log says which backend is active
   - [x] 2f Debug overlay shows backend, quality, draw calls and triangles from `renderer.stats` via the new `debug.setExtraStats()` hook; `npm run build` passes
-- [~] PBR material system (albedo, normal, roughness, metal, AO, emissive) — split into small steps (2026-11-26); mark the parent `[x]` only when 3e is done. Design: `docs/RENDERING.md` §3, texture folders: `ASSETS.md` §2:
+- [x] PBR material system (albedo, normal, roughness, metal, AO, emissive) — done 2026-11-26 in small steps 3a–3e; GitHub Actions run for commit `283664a`'s successor `6f14f16` passed (`npm ci`, `npm run build`, Pages deploy). Design: `docs/RENDERING.md` §3, texture folders: `ASSETS.md` §2:
   - [x] 3a `render/materials/types.ts` + `definition.ts`: material JSON shape (`version`, `name`, `category`, texture folder, scalar fallbacks for roughness/metallic/AO/emissive, `normalScale`, `uvScale`) and the `isMaterialDefinition` validator — builds; not exported from `render/index.ts` until 3e
   - [x] 3b `assets/data/materials/categories.json` (fallback tint + default roughness per category) + `render/materials/categories.ts` validator and loader — builds; not exported from `render/index.ts` until 3e
   - [x] 3c `render/materials/material-factory.ts`: build a PBR material from a definition using flat values and the category tint (no textures yet) — `resolveMaterialParams` + `createFlatPbrMaterial`; builds; not exported from `render/index.ts` until 3e
