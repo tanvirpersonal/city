@@ -33,4 +33,4 @@ simple, readable structure. Games are built *inside* the engine with its own edi
 
 ## Status
 
-See the checkboxes in [`PLAN.md`](PLAN.md). Currently in **Phase 0: planning**.
+See the checkboxes in [`PLAN.md`](PLAN.md). Phase 0 (planning) and **Phase 1 (foundation)** are complete; the next phase is **Phase 2: Rendering**.

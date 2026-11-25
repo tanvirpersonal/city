@@ -12,11 +12,13 @@ city/
 ├── ASSETS.md                asset wishlist, paste paths, status
 ├── docs/                    design docs (this folder)
 │
-├── package.json             (planned, Phase 1)
-├── tsconfig.json            (planned, Phase 1) strict mode
-├── vite.config.ts           (planned, Phase 1)
-├── index.html               (planned, Phase 1) entry page
-├── .github/workflows/       (planned, Phase 1) GitHub Pages deploy
+├── package.json             npm scripts and dev dependencies
+├── package-lock.json        locked dependency tree (CI installs with npm ci)
+├── tsconfig.json            strict mode
+├── vite.config.ts           aliases, relative base, assets/ as the public directory (D-013)
+├── index.html               entry page
+├── .gitignore               keeps node_modules/ and dist/ out of git
+├── .github/workflows/       GitHub Pages deploy
 │
 ├── src/
 │   ├── engine/              reusable engine — NEVER imports editor/ or games/
