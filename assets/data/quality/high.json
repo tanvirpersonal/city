@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "name": "high",
+  "renderScale": 1,
+  "shadowCascades": 4,
+  "shadowMapSize": 2048,
+  "ssao": true,
+  "ssr": true,
+  "antiAliasing": "taa",
+  "maxShadowLocalLights": 4,
+  "viewDistanceChunks": 7,
+  "depthOfField": false,
+  "motionBlur": false
+}
