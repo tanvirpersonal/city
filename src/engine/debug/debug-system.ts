@@ -10,6 +10,7 @@ class BrowserDebugOverlay implements DebugOverlay {
   private readonly maxLogEntries: number;
   private readonly statsIntervalSeconds: number;
   private readonly removePhaseHook: () => void;
+  private extraStats: (() => string) | undefined;
   private elapsed = 0;
   private frameCount = 0;
   private disposed = false;
@@ -60,6 +61,7 @@ class BrowserDebugOverlay implements DebugOverlay {
     this.stats = document.createElement("div");
     this.stats.textContent = "Waiting for frame data…";
     this.stats.style.color = "#90cdf4";
+    this.stats.style.whiteSpace = "pre-line";
 
     this.errorPanel = document.createElement("div");
     this.errorPanel.hidden = true;
@@ -104,6 +106,10 @@ class BrowserDebugOverlay implements DebugOverlay {
     this.errorPanel.hidden = true;
   }
 
+  setExtraStats(provider: (() => string) | undefined): void {
+    this.extraStats = provider;
+  }
+
   log(message: string, level: "info" | "warn" | "error" = "info"): void {
     const entry = document.createElement("div");
     entry.textContent = message;
@@ -133,7 +139,9 @@ class BrowserDebugOverlay implements DebugOverlay {
 
     const fps = this.frameCount / this.elapsed;
     const frameMilliseconds = (this.elapsed / this.frameCount) * 1000;
-    this.stats.textContent = `${fps.toFixed(0)} FPS  ·  ${frameMilliseconds.toFixed(1)} ms/frame`;
+    const base = `${fps.toFixed(0)} FPS  ·  ${frameMilliseconds.toFixed(1)} ms/frame`;
+    const extra = this.extraStats?.();
+    this.stats.textContent = extra === undefined || extra === "" ? base : `${base}\n${extra}`;
     this.elapsed = 0;
     this.frameCount = 0;
   }

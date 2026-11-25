@@ -14,6 +14,11 @@ export interface DebugOverlay {
   reportError(error: unknown): void;
   /** Clear the current visible error. */
   clearError(): void;
+  /**
+   * Show one extra text line under the FPS line, refreshed with the stats interval.
+   * Pass undefined to remove it. Used by the renderer for draw calls and triangles.
+   */
+  setExtraStats(provider: (() => string) | undefined): void;
   /** Append a safe text-only diagnostic message. */
   log(message: string, level?: "info" | "warn" | "error"): void;
   /** Remove engine hooks, browser listeners, and DOM nodes. */
