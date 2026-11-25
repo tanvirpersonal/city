@@ -53,7 +53,7 @@
 
 - [~] Renderer wrapper (WebGPU first, WebGL2 fallback) in `src/engine/render/` — split into small steps (2026-11-26); mark the parent `[x]` only when 2e is done:
   - [x] 2a Add the `three` dependency (`package.json` + `package-lock.json`) and note the install in `docs/TECH_STACK.md` — `three` 0.187 + `@types/three` 0.187 (dev); `npm run build` passes
-  - [ ] 2b `render/types.ts` (backend, quality preset, renderer API types)
+  - [x] 2b `render/types.ts` (backend, quality preset, renderer API types) — plus the `render/index.ts` type exports; the folder is not imported by `main.ts` until 2e
   - [ ] 2c Quality preset JSON: `assets/data/quality/{low,medium,high,ultra}.json` (values from `docs/RENDERING.md` §9) + `render/quality.ts` validator
   - [ ] 2d `render/render-system.ts` + `render/index.ts`: backend selection with fallback log, resize, frame render with `alpha`, draw/triangle stats, dispose
   - [ ] 2e Wire into `src/main.ts` (engine `render` phase, `renderer` service, backend + quality in the debug overlay), then update `docs/ARCHITECTURE.md` and `docs/STRUCTURE.md` if they changed
