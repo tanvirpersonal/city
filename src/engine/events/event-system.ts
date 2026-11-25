@@ -16,7 +16,8 @@ class TypedEventBus<Events extends EventMap> implements EventBus<Events> {
       if (!active) return;
       active = false;
       bucket.delete(typedListener);
-      if (bucket.size === 0) this.listeners.delete(event);
+      // clear() may already have replaced this bucket; never drop a newer one.
+      if (bucket.size === 0 && this.listeners.get(event) === bucket) this.listeners.delete(event);
     };
   }
 
@@ -42,10 +43,13 @@ class TypedEventBus<Events extends EventMap> implements EventBus<Events> {
   }
 
   clear<K extends keyof Events & string>(event?: K): void {
+    // Empty the buckets too, so an emit already in progress skips the removed listeners.
     if (event === undefined) {
+      for (const bucket of this.listeners.values()) bucket.clear();
       this.listeners.clear();
       return;
     }
+    this.listeners.get(event)?.clear();
     this.listeners.delete(event);
   }
 
