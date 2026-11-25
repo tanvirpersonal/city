@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "name": "low",
+  "renderScale": 0.75,
+  "shadowCascades": 2,
+  "shadowMapSize": 1024,
+  "ssao": false,
+  "ssr": false,
+  "antiAliasing": "fxaa",
+  "maxShadowLocalLights": 0,
+  "viewDistanceChunks": 3,
+  "depthOfField": false,
+  "motionBlur": false
+}
