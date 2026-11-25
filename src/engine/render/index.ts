@@ -1,3 +1,4 @@
+export { createRenderer } from "./render-system";
 export { QUALITY_NAMES } from "./types";
 export { DEFAULT_QUALITY, isQualityPreset, loadQualityPreset, qualityPresetPath } from "./quality";
 export type {
