@@ -4,9 +4,9 @@
 > Markers: `[ ]` not started · `[~]` in progress (note what is left) · `[x]` done+pushed+builds · `[!]` blocked
 > If this file and the file system disagree, trust the file system and fix this file.
 
-**Current phase:** Phase 2 — Rendering (started 2026-11-26; Phase 1 foundation complete, 11/11 verified)
+**Current phase:** Phase 3 — Physics (started 2026-11-26 at the owner's request; Phases 1 and 2 are read-only for this work — Phase 2 stays as it is, still in progress)
 **Last updated by:** Claude, 2026-11-26
-**Overall progress:** 26 / 96 items verified (27%), none in progress — Phase 0: 13/13 · Phase 1: 11/11 · Phase 2: 2/14 · Phases 3–11: 0/58. Next: "Procedural placeholder textures" (Phase 2).
+**Overall progress:** 26 / 96 items verified (27%) — Phase 0: 13/13 · Phase 1: 11/11 · Phase 2: 2/14 · Phase 3: 0/10 (wrapper sub-steps P3.1–P3.6: 1/6) · Phases 4–11: 0/48. The owner asked for Phase 3 first; the first unchecked Phase 2 item is still "Procedural placeholder textures".
 
 **Open notes for the owner / next AI:**
 - `package-lock.json` is committed and verified (`npm ci` + `npm run build` pass on a fresh clone), so the deploy workflow uses `npm ci`.
@@ -79,7 +79,13 @@
 
 ## Phase 3 — Physics
 
-- [ ] Physics wrapper in `src/engine/physics/` (Rapier WASM)
+- [~] Physics wrapper in `src/engine/physics/` (Rapier WASM) — split into small steps (2026-11-26); mark the parent `[x]` only when P3.6 is done. Design: `docs/PHYSICS.md` §1–2, decision D-004/D-014:
+  - [x] P3.1 Add `@dimforge/rapier3d-compat` 0.21 (`package.json` + `package-lock.json`); `npm ci` + `npm run build` verified on a fresh clone
+  - [ ] P3.2 `physics/types.ts`: our own types (vectors, bodies, colliders, queries, events, config shapes); no Rapier types leak out
+  - [ ] P3.3 Config: `assets/data/physics/world.json` + `materials.json`, `physics/config.ts` validators and loaders
+  - [ ] P3.4 `physics/components.ts`: `PhysicsBody` and `PhysicsTransform` ECS components
+  - [ ] P3.5 `physics/physics-system.ts`: Rapier init, world create/dispose, fixed step, body/collider creation, material lookup
+  - [ ] P3.6 `physics/index.ts` + `physics` service wired into `src/main.ts` (engine `physics` phase) with a falling-box self-test
 - [ ] Rigid bodies, colliders, materials (friction/restitution)
 - [ ] Fixed-step sync with rendering and interpolation
 - [ ] Raycasts, shape casts, trigger volumes, collision events
