@@ -13,6 +13,8 @@ import { createInputManager } from "@engine/input";
 import type { InputManager } from "@engine/input";
 import { createDebugOverlay } from "@engine/debug";
 import type { DebugOverlay } from "@engine/debug";
+import { createRenderer, DEFAULT_QUALITY, loadQualityPreset } from "@engine/render";
+import type { Renderer } from "@engine/render";
 import {
   createHelloEngineScene,
   HELLO_SCENE_CONFIG_PATH,
@@ -33,6 +35,66 @@ interface RuntimeServices extends ServiceMap {
   assets: AssetManager;
   input: InputManager;
   debug: DebugOverlay;
+  renderer: Renderer;
+}
+
+/**
+ * Create the renderer on its own inset canvas (a self-test cube) and drive it from the engine
+ * `render` phase. Failure is reported and skipped so the Phase 1 demo keeps running.
+ */
+async function mountRenderer(
+  engine: Engine,
+  root: HTMLElement,
+  config: ConfigLoader,
+  clearColor: string,
+  debug: DebugOverlay,
+): Promise<{ readonly renderer: Renderer | undefined; dispose(): void }> {
+  const canvas = document.createElement("canvas");
+  canvas.setAttribute("aria-label", "Renderer self-test");
+  Object.assign(canvas.style, {
+    position: "fixed",
+    right: "12px",
+    bottom: "12px",
+    zIndex: "900",
+    width: "min(320px, calc(100vw - 24px))",
+    height: "200px",
+    border: "1px solid #35404c",
+    borderRadius: "8px",
+  });
+  root.append(canvas);
+
+  try {
+    const quality = await loadQualityPreset(config, DEFAULT_QUALITY);
+    const renderer = await createRenderer({
+      canvas,
+      quality,
+      clearColor,
+      showTestCube: true,
+      onWarning: (message) => debug.log(message, "warn"),
+    });
+    const resize = (): void => {
+      const bounds = canvas.getBoundingClientRect();
+      renderer.resize(bounds.width, bounds.height, window.devicePixelRatio || 1);
+    };
+    resize();
+    window.addEventListener("resize", resize);
+    const removeRenderHook = engine.on("render", (frame) => renderer.render(frame.alpha));
+    debug.log(`Renderer online: ${renderer.backend}, quality ${renderer.quality.name}.`);
+    return {
+      renderer,
+      dispose: (): void => {
+        removeRenderHook();
+        window.removeEventListener("resize", resize);
+        renderer.dispose();
+        canvas.remove();
+      },
+    };
+  } catch (error) {
+    canvas.remove();
+    debug.reportError(error);
+    debug.log("Renderer unavailable; continuing without the 3D self-test.", "warn");
+    return { renderer: undefined, dispose: (): void => undefined };
+  }
 }
 
 /** Bootstrap the browser demo and register each Phase 1 system as a shared service. */
@@ -74,6 +136,7 @@ async function bootstrap(root: HTMLElement): Promise<void> {
   // Registered after the demo scene so transient input survives every render consumer.
   const clearInputFrame = engine.on("render", () => input.endFrame());
   events.on("engine:error", ({ error }) => debug.reportError(error));
+  const rendering = await mountRenderer(engine, root, config, sceneConfig.backgroundColor, debug);
 
   services.register("engine", engine);
   services.register("ecs", ecs);
@@ -82,6 +145,7 @@ async function bootstrap(root: HTMLElement): Promise<void> {
   services.register("assets", assets);
   services.register("input", input);
   services.register("debug", debug);
+  if (rendering.renderer !== undefined) services.register("renderer", rendering.renderer);
 
   if (configError !== undefined) {
     debug.reportError(configError);
@@ -94,6 +158,7 @@ async function bootstrap(root: HTMLElement): Promise<void> {
 
   window.addEventListener("pagehide", () => {
     disposeScene();
+    rendering.dispose();
     removeInputPhase();
     clearInputFrame();
     input.dispose();
