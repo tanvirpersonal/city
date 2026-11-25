@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "name": "medium",
+  "renderScale": 1,
+  "shadowCascades": 3,
+  "shadowMapSize": 2048,
+  "ssao": true,
+  "ssr": false,
+  "antiAliasing": "fxaa",
+  "maxShadowLocalLights": 2,
+  "viewDistanceChunks": 5,
+  "depthOfField": false,
+  "motionBlur": false
+}
