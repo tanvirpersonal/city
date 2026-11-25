@@ -23,7 +23,11 @@ function run(handlers: PhaseHandler[], ctx: FrameContext): void {
   // Index loop on purpose: no iterator allocation in the hot path.
   for (let i = 0; i < handlers.length; i++) {
     const handler = handlers[i];
-    if (handler !== undefined) handler(ctx);
+    if (handler === undefined) continue;
+    handler(ctx);
+    // A handler that unsubscribed itself (or an earlier one) shifted the list left:
+    // step back so the handler that moved into this slot is not skipped.
+    if (handlers[i] !== handler) i--;
   }
 }
 
