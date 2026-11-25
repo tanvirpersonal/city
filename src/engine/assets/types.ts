@@ -8,7 +8,7 @@ export type AssetPlaceholder<T> = (path: string, reason: unknown) => T | Promise
 export type AssetWarningHandler = (message: string, reason: unknown) => void;
 
 export interface AssetManagerOptions {
-  /** Relative asset root, normally "assets/". */
+  /** Base URL of the published asset root; Vite serves the repository assets/ folder at the site root (D-013). Defaults to ".". */
   readonly baseUrl?: string;
   /** Receives one warning per failed asset key. */
   readonly onWarning?: AssetWarningHandler;

@@ -6,7 +6,7 @@ class JsonConfigLoader implements ConfigLoader {
   private readonly cache = new Map<string, Promise<unknown>>();
 
   constructor(options: ConfigLoaderOptions = {}) {
-    this.baseUrl = (options.baseUrl ?? "assets/data").replace(/\/+$/, "");
+    this.baseUrl = (options.baseUrl ?? ".").replace(/\/+$/, "");
     // Native browser fetch must be invoked with the global object as its receiver.
     this.fetcher = (options.fetcher ?? globalThis.fetch).bind(globalThis);
   }

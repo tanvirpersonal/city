@@ -17,7 +17,7 @@ class BrowserAssetManager implements AssetManager {
   private readonly warned = new Set<string>();
 
   constructor(options: AssetManagerOptions = {}) {
-    this.baseUrl = (options.baseUrl ?? "assets").replace(/\/+$/, "");
+    this.baseUrl = (options.baseUrl ?? ".").replace(/\/+$/, "");
     this.onWarning = options.onWarning ?? ((message, reason) => console.warn(message, reason));
   }
 

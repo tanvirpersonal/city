@@ -3,7 +3,7 @@ export type ConfigValidator<T> = (value: unknown) => value is T;
 
 /** Configuration loader options. */
 export interface ConfigLoaderOptions {
-  /** Relative asset base path, normally "assets/data/". */
+  /** Base URL of the published asset root; paths passed to load() start with "data/" (D-013). Defaults to ".". */
   readonly baseUrl?: string;
   /** Injectable fetch implementation for tests or custom hosts. */
   readonly fetcher?: typeof fetch;
