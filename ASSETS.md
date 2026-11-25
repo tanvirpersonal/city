@@ -50,9 +50,9 @@ If you only have one image, paste it as `albedo.jpg` and the engine generates th
 
 | Status | Pri | Asset | Folder to paste into | Size | Source / license |
 |:--:|:--:|-------|----------------------|------|------------------|
-| [ ] | P0 | Asphalt, clean | `assets/textures/roads/asphalt-01/` | 2048 | |
-| [ ] | P0 | Asphalt, worn/cracked | `assets/textures/roads/asphalt-worn/` | 1024 | |
-| [ ] | P0 | Concrete sidewalk | `assets/textures/roads/sidewalk-01/` | 1024 | |
+| [x] | P0 | Asphalt, clean | `assets/textures/roads/asphalt-01/` | 2048 | `albedo.jpg` only (1.8 MB). Source/license: owner to fill in |
+| [~] | P0 | Asphalt, worn/cracked | `assets/textures/roads/asphalt-worn/` | 1024 | `albedo.png` is 1672x941 (not square or power-of-two) and 4.7 MB; the engine loads `albedo.jpg`, so convert it to a 1024 or 2048 JPG. Source/license: owner to fill in |
+| [~] | P0 | Concrete sidewalk | `assets/textures/roads/sidewalk-01/` | 1024 | `albedo.png` is 1672x941 (not square or power-of-two) and 4.7 MB; the engine loads `albedo.jpg`, so convert it to a 1024 JPG. Source/license: owner to fill in |
 | [ ] | P0 | Curb / concrete block | `assets/textures/roads/curb-01/` | 1024 | |
 | [ ] | P0 | Concrete wall | `assets/textures/buildings/concrete-01/` | 1024 | |
 | [ ] | P0 | Brick wall | `assets/textures/buildings/brick-01/` | 1024 | |
@@ -152,3 +152,4 @@ If you only paste a few things, paste these 8 first — they make the first demo
 
 - 2026-11-25 — File created with the full asset wishlist. Nothing provided yet.
 - 2026-11-26 — Material definitions `assets/data/materials/asphalt-01.json` and `concrete-01.json` now point at `assets/textures/roads/asphalt-01/` and `assets/textures/buildings/concrete-01/`. The engine's self-test cube (inset canvas, bottom-right) uses `concrete-01`: paste `albedo.jpg` (plus optional `normal.png`, `roughness.jpg`, ...) into that folder and it appears with no code change. Until then it is a flat grey tint.
+- 2026-11-26 — Owner uploaded 3 road textures. Fixed the `asphalt-01 ` folder name (trailing space) and restored the two PNGs that a GitHub web rename had replaced with empty `albedo.jpg` files. Marked `asphalt-01` `[x]` and the other two `[~]` (wrong format/size, see rows). `concrete-01` (used by the self-test cube) is still empty.
