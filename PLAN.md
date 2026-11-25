@@ -4,7 +4,7 @@
 > Markers: `[ ]` not started · `[~]` in progress (note what is left) · `[x]` done+pushed+builds · `[!]` blocked
 > If this file and the file system disagree, trust the file system and fix this file.
 
-**Current phase:** Phase 1 — Foundation complete (11/11 items verified); next: Phase 2 — Rendering
+**Current phase:** Phase 2 — Rendering (started 2026-11-26; Phase 1 foundation complete, 11/11 verified)
 **Last updated by:** Claude, 2026-11-25
 **Overall progress:** 24 / 96 items verified (25%), none in progress — Phase 0: 13/13 · Phase 1: 11/11 · Phases 2–11: 0/72
 
@@ -51,7 +51,12 @@
 
 ## Phase 2 — Rendering (Unreal-type look)
 
-- [ ] Renderer wrapper (WebGPU first, WebGL2 fallback) in `src/engine/render/`
+- [~] Renderer wrapper (WebGPU first, WebGL2 fallback) in `src/engine/render/` — split into small steps (2026-11-26); mark the parent `[x]` only when 2e is done:
+  - [ ] 2a Add the `three` dependency (`package.json` + `package-lock.json`) and note the install in `docs/TECH_STACK.md`
+  - [ ] 2b `render/types.ts` (backend, quality preset, renderer API types)
+  - [ ] 2c Quality preset JSON: `assets/data/quality/{low,medium,high,ultra}.json` (values from `docs/RENDERING.md` §9) + `render/quality.ts` validator
+  - [ ] 2d `render/render-system.ts` + `render/index.ts`: backend selection with fallback log, resize, frame render with `alpha`, draw/triangle stats, dispose
+  - [ ] 2e Wire into `src/main.ts` (engine `render` phase, `renderer` service, backend + quality in the debug overlay), then update `docs/ARCHITECTURE.md` and `docs/STRUCTURE.md` if they changed
 - [ ] PBR material system (albedo, normal, roughness, metal, AO, emissive)
 - [ ] Procedural placeholder textures
 - [ ] Lighting: sun/moon directional, point/spot lights, image-based lighting (HDR sky)
