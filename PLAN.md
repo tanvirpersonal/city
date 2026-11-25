@@ -63,7 +63,7 @@
   - [x] 3b `assets/data/materials/categories.json` (fallback tint + default roughness per category) + `render/materials/categories.ts` validator and loader — builds; not exported from `render/index.ts` until 3e
   - [x] 3c `render/materials/material-factory.ts`: build a PBR material from a definition using flat values and the category tint (no textures yet) — `resolveMaterialParams` + `createFlatPbrMaterial`; builds; not exported from `render/index.ts` until 3e
   - [x] 3d `render/materials/texture-set.ts`: load the texture folder through the asset manager; albedo and emissive are sRGB. Missing maps are skipped (one warning, and the whole set is skipped when `albedo` is missing) and the flat material values give the same look as procedural flat maps (flat normal, roughness 0.8, no metal, AO 1); `createPbrMaterial` in `material-factory.ts` attaches the maps that exist. Builds; not exported from `render/index.ts` until 3e
-  - [ ] 3e `render/materials/index.ts` public API + sample `assets/data/materials/*.json`; the self-test cube uses a library material (with a temporary light in the test scene until the lighting item replaces it)
+  - [x] 3e `render/materials/index.ts` public API + sample `assets/data/materials/*.json` (`asphalt-01`, `concrete-01`); the self-test cube uses the `concrete-01` library material (with a temporary light in the test scene until the lighting item replaces it); `materials` service registered in `main.ts`; `docs/RENDERING.md` §3 and `ASSETS.md` updated. `npm run build` passes; not yet checked in a real browser
 - [ ] Procedural placeholder textures
 - [ ] Lighting: sun/moon directional, point/spot lights, image-based lighting (HDR sky)
 - [ ] Cascaded shadow maps

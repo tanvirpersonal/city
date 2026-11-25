@@ -25,10 +25,12 @@ A consistent physically based look, not a feature checklist:
 
 ## 3. Materials
 
-- One PBR material type, defined by JSON in `assets/data/materials/` (type + validation in `render/materials/types.ts`).
-- Texture sets follow the folder convention in `ASSETS.md` §2 (only `albedo` required).
-- Missing maps are generated procedurally (flat normal, default roughness 0.8, no metal, AO 1).
-- Missing albedo falls back to a flat color tinted by material category so scenes stay readable.
+- One PBR material type, defined by JSON in `assets/data/materials/<name>.json` (types in `render/materials/types.ts`, validator in `definition.ts`). Materials are fetched by name from the material library (`createMaterialLibrary`, registered as the `materials` service).
+- `assets/data/materials/categories.json` holds the per-category fallback tint, roughness and metallic, plus global defaults for AO, normal scale, UV scale and emissive intensity. Unset material fields use the category value, then the global default.
+- Texture sets follow the folder convention in `ASSETS.md` §2 (only `albedo` required) and load through the asset manager.
+- A missing map is skipped and the flat value gives the same look as a default map (flat normal, roughness from the category (0.8 for `generic`), no metal, AO 1). When a map exists it drives that property; the height map is not used yet.
+- A missing `albedo` means the whole set is skipped after one warning, and the material falls back to a flat color tinted by its category so scenes stay readable.
+- A material whose JSON is missing or invalid becomes a flat `generic` placeholder with one warning; the library never throws for a single material.
 - Texture compression: KTX2/Basis where available, otherwise JPG/PNG as pasted.
 
 ## 4. Lighting and shadows

@@ -151,3 +151,4 @@ If you only paste a few things, paste these 8 first — they make the first demo
 ## 9. Change log
 
 - 2026-11-25 — File created with the full asset wishlist. Nothing provided yet.
+- 2026-11-26 — Material definitions `assets/data/materials/asphalt-01.json` and `concrete-01.json` now point at `assets/textures/roads/asphalt-01/` and `assets/textures/buildings/concrete-01/`. The engine's self-test cube (inset canvas, bottom-right) uses `concrete-01`: paste `albedo.jpg` (plus optional `normal.png`, `roughness.jpg`, ...) into that folder and it appears with no code change. Until then it is a flat grey tint.
