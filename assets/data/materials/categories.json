@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "defaults": {
+    "ao": 1,
+    "normalScale": 1,
+    "uvScale": 1,
+    "emissiveIntensity": 1
+  },
+  "categories": {
+    "roads": { "tint": "#3a3d42", "roughness": 0.9, "metallic": 0 },
+    "buildings": { "tint": "#a9a39a", "roughness": 0.85, "metallic": 0 },
+    "terrain": { "tint": "#5d7a45", "roughness": 0.95, "metallic": 0 },
+    "props": { "tint": "#8a8f96", "roughness": 0.7, "metallic": 0.2 },
+    "vehicles": { "tint": "#b5382f", "roughness": 0.4, "metallic": 0.6 },
+    "interiors": { "tint": "#c9bfae", "roughness": 0.8, "metallic": 0 },
+    "water": { "tint": "#2b6f8f", "roughness": 0.1, "metallic": 0 },
+    "generic": { "tint": "#9aa0a6", "roughness": 0.8, "metallic": 0 }
+  }
+}
