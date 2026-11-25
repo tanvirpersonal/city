@@ -73,10 +73,15 @@ class World implements EcsWorld {
       requiredStores.push(this.getOrCreateStore(type));
     }
 
-    let baseStore: ComponentStore | undefined;
-    for (const store of requiredStores) {
-      if (baseStore === undefined || store.size < baseStore.size) baseStore = store;
-    }
+    // Pick the smallest store on every call: sizes change after the query is created, so a
+    // choice made here would be stale (and arbitrary for queries built before any component exists).
+    const smallestStore = (): ComponentStore | undefined => {
+      let smallest: ComponentStore | undefined;
+      for (const store of requiredStores) {
+        if (smallest === undefined || store.size < smallest.size) smallest = store;
+      }
+      return smallest;
+    };
 
     return {
       forEach: (visitor): void => {
@@ -84,6 +89,7 @@ class World implements EcsWorld {
           for (const entity of this.alive) visitor(entity);
           return;
         }
+        const baseStore = smallestStore();
         if (baseStore === undefined) return;
 
         for (const entity of baseStore.keys()) {
@@ -101,6 +107,7 @@ class World implements EcsWorld {
       count: (): number => {
         let total = 0;
         if (requiredStores.length === 0) return this.alive.size;
+        const baseStore = smallestStore();
         if (baseStore === undefined) return total;
         for (const entity of baseStore.keys()) {
           if (!this.alive.has(entity)) continue;
