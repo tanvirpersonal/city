@@ -160,9 +160,9 @@ export function createEcsRuntime(engine: Engine, world: EcsWorld = createEcsWorl
       const unregister = engine.on(system.phase, (context) => system.update(world, context));
       systems.set(system.name, unregister);
       return () => {
-        const remove = systems.get(system.name);
-        if (remove === undefined) return;
-        remove();
+        // Ignore late or repeated calls once this registration was removed or replaced.
+        if (systems.get(system.name) !== unregister) return;
+        unregister();
         systems.delete(system.name);
       };
     },
